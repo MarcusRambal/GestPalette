@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="index.css">
+    <script href="../renderer.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <!-- Logo -->
+    <div class="logo">
+      <div class="logo-box">
+        <img src="../assets/frupalette_logo.jpg" alt="Frupalette" class="logo-image">
+        <h1 class="logo-text">Frupalette</h1>
+      </div>
+    </div>
+      <!-- Navigation -->
+      <nav class="nav">
+        <a href="./index.html" class="nav-link">Inicio</a>
+        <a href="./products.html" class="nav-link">Gestor de Productos</a>
+        <a href="./stats.html" class="nav-link">Estadisticas</a>
+        <a href="./history.html" class="nav-link">Historial</a>
+      </nav>
+  </header>
+
+  <div class="search-container">
+    <!-- Botón desplegable -->
+    <div class="dropdown">
+      <button class="dropdown-button">Filtrar ▼</button>
+      <div class="dropdown-menu">
+        <label>
+          <input type="checkbox" value="opcion1"> Opción 1
+        </label>
+        <label>
+          <input type="checkbox" value="opcion2"> Opción 2
+        </label>
+        <label>
+          <input type="checkbox" value="opcion3"> Opción 3
+        </label>
+      </div>
+    </div>
+
+    <!-- Barra de búsqueda -->
+    <input type="text" class="search-bar" placeholder="Buscar...">
+    <button class="search-button">🔍</button>
+  </div>
+
+  <div class="main-container">
+    <!-- Barra lateral de filtros rápidos -->
+    <div class="filter-section">
+      <h2>Filtrado Rápido</h2>
+      <form>
+        <label>
+          <input type="checkbox" name="category" value="opcion1">
+          Opción 1
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="opcion2">
+          Opción 2
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="opcion3">
+          Opción 3
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="opcion4">
+          Opción 4
+        </label>
+      </form>
+    </div>
+  
+    <!-- Contenedor principal de productos -->
+    <div class="products-container">
+      <div class="products-sidebar">
+        <!-- Barra lateral de productos, para desplazarse -->
+        <div class="products-list">
+          <!-- Aquí van los productos -->
+          <div class="product-card">
+            <img src="product1.jpg" alt="Producto 1">
+            <h3>Producto 1</h3>
+            <p>$100.00</p>
+          </div>
+          <div class="product-card">
+            <img src="product2.jpg" alt="Producto 2">
+            <h3>Producto 2</h3>
+            <p>$150.00</p>
+          </div>
+          <div class="product-card">
+            <img src="product3.jpg" alt="Producto 3">
+            <h3>Producto 3</h3>
+            <p>$80.00</p>
+          </div>
+          <!-- Puedes agregar más productos aquí -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor de productos seleccionados -->
+    <div class="selected-products-container">
+      <h2>Productos Seleccionados</h2>
+      <div class="selected-products-sidebar">
+        <table class="selected-products-table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>Descuento</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Ejemplo de productos seleccionados -->
+            <tr>
+              <td>Producto 1</td>
+              <td><input type="number" value="2" class="quantity-input" min="1"></td>
+              <td>$100.00</td>
+              <td><input type="number" value="0" class="discount-input" min="0" max="100"></td>
+              <td class="total-price">$200.00</td>
+            </tr>
+            <tr>
+              <td>Producto 2</td>
+              <td><input type="number" value="1" class="quantity-input" min="1"></td>
+              <td>$150.00</td>
+              <td><input type="number" value="10" class="discount-input" min="0" max="100"></td>
+              <td class="total-price">$135.00</td>
+            </tr>
+            <!-- Más productos seleccionados -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Línea separadora -->
+      <hr class="separator">
+
+      <!-- Contenedor de pago dentro de selected-products-container -->
+      <div class="payment-container">
+        <h2>Total: $335.00</h2>
+        <div class="payment-options">
+          <label>
+            <input type="checkbox" name="payment" value="efectivo">
+            Efectivo
+          </label>
+          <label>
+            <input type="checkbox" name="payment" value="tarjeta">
+            Tarjeta
+          </label>
+        </div>
+        <button class="pay-button">Pagar</button>
+      </div>
+    </div>
+  </div> <!--main-container-->
+</body>
+</html>
