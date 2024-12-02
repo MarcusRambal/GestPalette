@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link rel="stylesheet" href="index.css">
-    <script href="../renderer.js"></script>
+    
 </head>
+
 <body>
   <!-- Header -->
   <header class="header">
@@ -20,33 +21,17 @@
       <!-- Navigation -->
       <nav class="nav">
         <a href="./index.html" class="nav-link">Inicio</a>
+        <a href="./balance.html" class ="nav-link">Balance</a>
         <a href="./products.html" class="nav-link">Gestor de Productos</a>
         <a href="./stats.html" class="nav-link">Estadisticas</a>
         <a href="./history.html" class="nav-link">Historial</a>
+
       </nav>
   </header>
 
-  <div class="search-container">
-    <!-- Botón desplegable -->
-    <div class="dropdown">
-      <button class="dropdown-button">Filtrar ▼</button>
-      <div class="dropdown-menu">
-        <label>
-          <input type="checkbox" value="opcion1"> Opción 1
-        </label>
-        <label>
-          <input type="checkbox" value="opcion2"> Opción 2
-        </label>
-        <label>
-          <input type="checkbox" value="opcion3"> Opción 3
-        </label>
-      </div>
-    </div>
+  <button id = "boton">presioname</button>
+  <p id = "mensaje"></p>
 
-    <!-- Barra de búsqueda -->
-    <input type="text" class="search-bar" placeholder="Buscar...">
-    <button class="search-button">🔍</button>
-  </div>
 
   <div class="main-container">
     <!-- Barra lateral de filtros rápidos -->
@@ -54,20 +39,56 @@
       <h2>Filtrado Rápido</h2>
       <form>
         <label>
-          <input type="checkbox" name="category" value="opcion1">
-          Opción 1
+          <input type="checkbox" name="category" value="FastEspeciales">
+          Especiales
         </label>
         <label>
-          <input type="checkbox" name="category" value="opcion2">
-          Opción 2
+          <input type="checkbox" name="category" value="FastHelados">
+          Helados
         </label>
         <label>
-          <input type="checkbox" name="category" value="opcion3">
-          Opción 3
+          <input type="checkbox" name="category" value="FastDeluxe">
+          Deluxe
         </label>
         <label>
-          <input type="checkbox" name="category" value="opcion4">
-          Opción 4
+          <input type="checkbox" name="category" value="FastSodas">
+          Sodas
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastLicor">
+          Licor
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastRellenas">
+          Rellenas
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastFrappe">
+          Frappe
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastTopping">
+          Topping
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastAgua">
+          Agua
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastMalteadas">
+          Malteadas
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastBebidas">
+          Bebidas
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastLeche">
+          Leche
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="FastYogurt">
+          Yogurt
         </label>
       </form>
     </div>
@@ -75,29 +96,32 @@
     <!-- Contenedor principal de productos -->
     <div class="products-container">
       <div class="products-sidebar">
-        <!-- Barra lateral de productos, para desplazarse -->
-        <div class="products-list">
-          <!-- Aquí van los productos -->
-          <div class="product-card">
-            <img src="product1.jpg" alt="Producto 1">
-            <h3>Producto 1</h3>
-            <p>$100.00</p>
+        <!-- Caja para agregar producto -->
+        <div class="add-product-box">
+          <div class="add-product-header" id="add-product-toggle">
+          <span>+</span>
+          <p>Agregar Producto</p>
           </div>
-          <div class="product-card">
-            <img src="product2.jpg" alt="Producto 2">
-            <h3>Producto 2</h3>
-            <p>$150.00</p>
-          </div>
-          <div class="product-card">
-            <img src="product3.jpg" alt="Producto 3">
-            <h3>Producto 3</h3>
-            <p>$80.00</p>
-          </div>
-    
-        </div>
-      </div>
-    </div>
 
+          <!-- Formulario desplegable (inicia oculto) -->
+          <div class="add-product-form" id="add-product-form" style="display: none;">
+            <h3>Nuevo Producto</h3>
+            <input type="file" id="product-image" accept="image/*">
+            <input type="text" id="product-name" placeholder="Nombre del Producto">
+            <input type="number" id="product-price" placeholder="Precio de Venta">
+            <input type="number" id="product-cost" placeholder="Costo del Producto">
+            <button id="add-product-btn">Añadir Producto</button>
+            </div>
+        </div>
+
+          <!-- Lista de productos -->
+          <div class="products-list">
+          <!-- Los productos se añadirán dinámicamente aquí -->
+         </div>
+      </div> <!--products-sidebar-->
+    </div> <!--products-container-->
+    
+    
     <!-- Contenedor de productos seleccionados -->
     <div class="selected-products-container">
       <h2>Productos Seleccionados</h2>
@@ -113,7 +137,7 @@
             </tr>
           </thead>
           <tbody>
-         
+            <!-- Ejemplo de productos seleccionados -->
             <tr>
               <td>Producto 1</td>
               <td><input type="number" value="2" class="quantity-input" min="1"></td>
@@ -128,7 +152,7 @@
               <td><input type="number" value="10" class="discount-input" min="0" max="100"></td>
               <td class="total-price">$135.00</td>
             </tr>
-         
+            <!-- Más productos seleccionados -->
           </tbody>
         </table>
       </div>
@@ -154,4 +178,5 @@
     </div>
   </div> <!--main-container-->
 </body>
+<script src ="../renderer.js"></script>
 </html>
