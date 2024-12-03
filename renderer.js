@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <p class="price">$${product.price}</p>
           <button class="add-to-cart" data-product-id="${product.name}">+</button>
         `
-
+        // Data-product-id sera la forma de identificar el producto luego de presionar el +
         productsContainer.appendChild(productBlock)
       })
     }
