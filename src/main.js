@@ -1,5 +1,17 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+const fs = require('fs')
+
+let products = []
+
+// Cargar productos al inicio
+try {
+  const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf-8')
+  products = JSON.parse(data)
+  console.log('Productos cargados desde config.json:', products)
+} catch (error) {
+  console.error('Error al leer config.json:', error)
+}
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -20,11 +32,10 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow()
 
-  ipcMain.on('add-product', (event, product) => {
-    console.log('producto anadido', product)
-
-    event.reply('product-added', product)
-  })
+  // Enviar productos al renderer
+  ipcMain.handle('get-products', () => products)
+  console.log('Productos enviados al renderer: ', products)
+  return products
 })
 
 app.on('window-all-closed', () => {
