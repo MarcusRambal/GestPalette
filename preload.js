@@ -4,12 +4,9 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('paletteAPI', {
   Products: {
-    addProduct: (product) => {
-      console.log('Enviando producto al proceso principal...', product) // Verifica que el producto está siendo enviado
-      ipcRenderer.send('add-product', product)
-    },
-    onProductAdded: (callback) => {
-      ipcRenderer.on('product-added', callback)
+    getProducts: async () => {
+      console.log('Llamando a get-products desde renderer')
+      return await ipcRenderer.invoke('get-products') // Devuelve el resultado de la invocación
     }
   }
 })
