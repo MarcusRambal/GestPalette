@@ -1,0 +1,83 @@
+{
+    "products": [
+      {
+        "name": "Agua",
+        "price": 3000,
+        "cost": 0,
+        "image": "../assets/Agua.jpg"    
+      },
+      {
+        "name": "Corozo",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Fresa",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Limon",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Lulo",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Mango",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Maracuya",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Mora",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Piña",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Sandia",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Tamarindo",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Uva",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      },
+      {
+        "name": "Mandarina",
+        "price": 3000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg"
+      }
+    ]
+  }
+  
