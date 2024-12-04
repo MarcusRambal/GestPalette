@@ -356,16 +356,88 @@ button.delete-product:active {
   margin-bottom: 10px;
 }
 
-.pay-button {
-  background-color: #28a745;
-  color: white;
-  padding: 10px 15px;
-  width: 100%;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+
+/* Estilos para la nueva entrada de cantidad de dinero */
+.amount-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.pay-button:hover {
-  background-color: #218838;
+#amount-paid {
+  padding: 5px;
+  font-size: 14px;
+  width: 150px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
+
+.amount-container label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Estilo para el área del vuelto */
+.change-container {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(245, 30, 66);
+}
+
+#change-display {
+  font-size: 16px;
+  color: rgb(223, 18, 18);
+}
+
+/* Estilo del contenedor de pago */
+.payment-container {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Botón para calcular vuelto */
+.calculate-return-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+  max-width: 200px;  
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto hover del botón calcular vuelto */
+.calculate-return-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px); 
+}
+
+/* Botón de pagar */
+.pay-button {
+  background-color: #FF5733;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+  max-width: 200px;
+}
+
+/* Efecto hover del botón pagar */
+.pay-button:hover {
+  background-color: #e04e2d;
+  transform: translateY(-2px);
+}
+
