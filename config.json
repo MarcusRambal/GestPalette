@@ -1,82 +1,200 @@
 {
     "products": [
       {
-        "name": "Agua",
-        "price": 3000,
+        "name": "Mini Chip",
+        "price": 4000,
         "cost": 0,
-        "image": "../assets/Agua.jpg"    
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Corozo Coco",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Vainilla con Oreo",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Sandia Yogurt y Kiwi",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Fresa Piña Kiwi",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Limonada de Coco",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Limonada de Hierbabuena",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Piña Hierbabuena",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Vainilla Chispas de Chocolate",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Queso con Bocadillo",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Vainilla Brownie",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Frupalette de la Casa",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Mango Biche",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "Mango Biche Ginger",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
+      },
+      {
+        "name": "",
+        "price": 4000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Especiales"
       },
       {
         "name": "Corozo",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Fresa",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Limon",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Lulo",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Mango",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Maracuya",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Mora",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Piña",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Sandia",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Tamarindo",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Uva",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
       },
       {
         "name": "Mandarina",
         "price": 3000,
         "cost": 0,
-        "image": "/assets/frupalette_logo.jpg"
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Agua"
+      },
+      {
+        "name": "Agua",
+        "price": 3000,
+        "cost": 0,
+        "image": "../assets/Agua.jpg", 
+        "type" : "Bebidas"   
       }
     ]
   }
