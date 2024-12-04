@@ -2,6 +2,8 @@ console.log('renderer.js cargado correctamente')
 
 document.addEventListener('DOMContentLoaded', async () => {
   const productsContainer = document.querySelector('.products-list')
+  const selectedProductsTableBody = document.querySelector('.selected-products-table tbody')
+  const selectedProducts = {}
 
   try {
     const { products } = await window.paletteAPI.Products.getProducts() // Extrae 'products'
@@ -24,12 +26,106 @@ document.addEventListener('DOMContentLoaded', async () => {
           <p class="price">$${product.price}</p>
           <button class="add-to-cart" data-product-id="${product.name}">+</button>
         `
-        // Data-product-id sera la forma de identificar el producto luego de presionar el +
+        productBlock.querySelector('.add-to-cart').addEventListener('click', () => addProductToSelection(product))
         productsContainer.appendChild(productBlock)
       })
     }
 
     updateProductList(products)
+
+    function addProductToSelection (product) {
+      if (selectedProducts[product.name]) {
+        selectedProducts[product.name].quantity += 1
+      } else {
+        selectedProducts[product.name] = {
+          ...product,
+          quantity: 1,
+          discount: 0
+        }
+      }
+      updateSelectedProductsTable()
+    }
+
+    function updateSelectedProductsTable () {
+      selectedProductsTableBody.innerHTML = ''
+      let total = 0
+
+      Object.values(selectedProducts).forEach(product => {
+        const productTotal = product.quantity * product.price * ((100 - product.discount) / 100)
+        total += productTotal
+
+        const productRow = document.createElement('tr')
+        productRow.innerHTML = `
+          <td>${product.name}</td>
+          <td><input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.name}"></td>
+          <td>$${product.price.toFixed(2)}</td>
+          <td><input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.name}"></td>
+          <td class = "total-cell">$${productTotal.toFixed(2)}</td>
+          <td><button class="delete-product" data-product-id="${product.name}">Eliminar</button></td> <!-- Botón de eliminación -->
+          `
+        selectedProductsTableBody.appendChild(productRow)
+      })
+
+      document.querySelectorAll('.discount-input').forEach(input => {
+        input.addEventListener('input', handleDiscountChange)
+      })
+      document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('input', handleQuantityChange)
+      })
+
+      document.querySelectorAll('.delete-product').forEach(button => {
+        button.addEventListener('click', handleDeleteProduct)
+      })
+      
+      updateTotal()
+    }
+
+    function handleQuantityChange (event) {
+      const input = event.target
+      const productName = input.getAttribute('data-product-id')
+      const quantity = parseInt(input.value) || 0
+      const product = selectedProducts[productName]
+
+      if (product) {
+        product.quantity = quantity
+        updateSelectedProductsTable()
+      }
+    }
+
+    function handleDiscountChange (event) {
+      const input = event.target
+      const productName = input.getAttribute('data-product-id')
+      const discount = Math.min(Math.max(parseFloat(input.value) || 0, 0), 100) 
+      const product = selectedProducts[productName]
+
+      if (product) {
+        product.discount = discount
+        updateSelectedProductsTable()
+      }
+    }
+
+    function handleDeleteProduct () {
+      const button = event.currentTarget
+      const productName = button.getAttribute('data-product-id')
+
+      delete selectedProducts[productName]
+
+      updateSelectedProductsTable()
+    }
+
+    function updateTotal () {
+      let total = 0
+
+      document.querySelectorAll('.total-cell').forEach(cell => {
+        total += parseFloat(cell.textContent.replace('$', '')) || 0
+      })
+
+     
+      const totalDisplay = document.querySelector('#total-display')
+      if (totalDisplay) {
+        totalDisplay.textContent = `Total: $${total.toFixed(2)}`
+      }
+    }
 
     function filterProducts () {
       const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(input => input.value)
