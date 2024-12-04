@@ -3,6 +3,9 @@ console.log('renderer.js cargado correctamente')
 document.addEventListener('DOMContentLoaded', async () => {
   const productsContainer = document.querySelector('.products-list')
   const selectedProductsTableBody = document.querySelector('.selected-products-table tbody')
+  const amountPaidInput = document.getElementById('amount-paid')
+  const changeDisplay = document.getElementById('change-return')
+  const calculateReturnButton = document.querySelector('.calculate-return-button')
   const selectedProducts = {}
 
   try {
@@ -46,10 +49,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       updateSelectedProductsTable()
     }
 
+    // Actualizar tabla de productos seleccionados
     function updateSelectedProductsTable () {
       selectedProductsTableBody.innerHTML = ''
+      // eslint-disable-next-line no-unused-vars
       let total = 0
-
       Object.values(selectedProducts).forEach(product => {
         const productTotal = product.quantity * product.price * ((100 - product.discount) / 100)
         total += productTotal
@@ -57,11 +61,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const productRow = document.createElement('tr')
         productRow.innerHTML = `
           <td>${product.name}</td>
-          <td><input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.name}"></td>
+          <td>
+          <input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.name}">
+         </td>
           <td>$${product.price.toFixed(2)}</td>
-          <td><input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.name}"></td>
-          <td class = "total-cell">$${productTotal.toFixed(2)}</td>
-          <td><button class="delete-product" data-product-id="${product.name}">Eliminar</button></td> <!-- Botón de eliminación -->
+          <td>
+          <input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.name}">
+          </td>
+          <td class="total-cell">$${productTotal.toFixed(2)}</td>
+          <td><button class="delete-product" data-product-id="${product.name}">Eliminar</button></td>
           `
         selectedProductsTableBody.appendChild(productRow)
       })
@@ -76,7 +84,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.querySelectorAll('.delete-product').forEach(button => {
         button.addEventListener('click', handleDeleteProduct)
       })
-      
+
+      // Actualizar el total en la vista
       updateTotal()
     }
 
@@ -95,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function handleDiscountChange (event) {
       const input = event.target
       const productName = input.getAttribute('data-product-id')
-      const discount = Math.min(Math.max(parseFloat(input.value) || 0, 0), 100) 
+      const discount = Math.min(Math.max(parseFloat(input.value) || 0, 0), 100)
       const product = selectedProducts[productName]
 
       if (product) {
@@ -104,13 +113,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
-    function handleDeleteProduct () {
+    function handleDeleteProduct (event) {
       const button = event.currentTarget
       const productName = button.getAttribute('data-product-id')
 
       delete selectedProducts[productName]
 
       updateSelectedProductsTable()
+    }
+
+    function updateReturn (total) {
+      calculateReturnButton.addEventListener('click', () => {
+        const amountPaid = parseFloat(amountPaidInput.value) || 0
+        const change = amountPaid - total
+        if (change >= 0) {
+          changeDisplay.textContent = `Vuelto: $${change.toFixed(2)}`
+        } else {
+          changeDisplay.textContent = 'La cantidad dada por el cliente es menor que el total a pagar!'
+        }
+      })
     }
 
     function updateTotal () {
@@ -120,11 +141,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         total += parseFloat(cell.textContent.replace('$', '')) || 0
       })
 
-     
       const totalDisplay = document.querySelector('#total-display')
       if (totalDisplay) {
         totalDisplay.textContent = `Total: $${total.toFixed(2)}`
       }
+      updateReturn(total)
     }
 
     function filterProducts () {
@@ -144,3 +165,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
