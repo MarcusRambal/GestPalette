@@ -255,6 +255,29 @@
   background-color: #f9f9f9;
 }
 
+/* Botón de eliminar */
+button.delete-product {
+  background-color: #e74c3c; /* Rojo */
+  color: #fff;
+  font-weight: bold;
+}
+
+button.delete-product:hover {
+  background-color: #c0392b; /* Rojo oscuro */
+  transform: scale(1.05); /* Pequeño zoom al pasar el mouse */
+}
+
+button.delete-product:active {
+  background-color: #a93226; /* Más oscuro al hacer clic */
+  transform: scale(1); /* Quitar el zoom */
+}
+
+/* Opcional: ajustar el ancho dentro de la tabla */
+.selected-products-table button.delete-product {
+  width: 100px; /* Ancho fijo */
+  text-align: center;
+}
+
 /* Línea separadora */
 .separator {
   border: 0;
