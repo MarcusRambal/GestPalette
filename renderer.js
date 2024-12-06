@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const productsContainer = document.querySelector('.products-list')
   const selectedProductsTableBody = document.querySelector('.selected-products-table tbody')
   const amountPaidInput = document.getElementById('amount-paid')
-  const changeDisplay = document.getElementById('change-return')
+  const changeReturn = document.getElementById('change-return')
   const calculateReturnButton = document.querySelector('.calculate-return-button')
   const selectedProducts = {}
 
@@ -37,11 +37,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateProductList(products)
 
     function addProductToSelection (product) {
-      if (selectedProducts[product.name]) {
-        selectedProducts[product.name].quantity += 1
+      const productId = `${product.name}_${product.type}_${product.price}`
+      if (selectedProducts[productId]) {
+        selectedProducts[productId].quantity += 1
       } else {
-        selectedProducts[product.name] = {
+        selectedProducts[productId] = {
           ...product,
+          id: productId,
           quantity: 1,
           discount: 0
         }
@@ -66,10 +68,10 @@ document.addEventListener('DOMContentLoaded', async () => {
          </td>
           <td>$${product.price.toFixed(2)}</td>
           <td>
-          <input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.name}">
+          <input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.id}">
           </td>
           <td class="total-cell">$${productTotal.toFixed(2)}</td>
-          <td><button class="delete-product" data-product-id="${product.name}">Eliminar</button></td>
+          <td><button class="delete-product" data-product-id="${product.id}">Eliminar</button></td>
           `
         selectedProductsTableBody.appendChild(productRow)
       })
@@ -91,9 +93,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function handleQuantityChange (event) {
       const input = event.target
-      const productName = input.getAttribute('data-product-id')
+      const productId = input.getAttribute('data-product-id')
       const quantity = parseInt(input.value) || 0
-      const product = selectedProducts[productName]
+      const product = selectedProducts[productId]
 
       if (product) {
         product.quantity = quantity
@@ -103,9 +105,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function handleDiscountChange (event) {
       const input = event.target
-      const productName = input.getAttribute('data-product-id')
+      const productId = input.getAttribute('data-product-id')
       const discount = Math.min(Math.max(parseFloat(input.value) || 0, 0), 100)
-      const product = selectedProducts[productName]
+      const product = selectedProducts[productId]
 
       if (product) {
         product.discount = discount
@@ -115,9 +117,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function handleDeleteProduct (event) {
       const button = event.currentTarget
-      const productName = button.getAttribute('data-product-id')
+      const productId = button.getAttribute('data-product-id')
 
-      delete selectedProducts[productName]
+      delete selectedProducts[productId]
 
       updateSelectedProductsTable()
     }
@@ -127,9 +129,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const amountPaid = parseFloat(amountPaidInput.value) || 0
         const change = amountPaid - total
         if (change >= 0) {
-          changeDisplay.textContent = `Vuelto: $${change.toFixed(2)}`
+          changeReturn.textContent = `Vuelto: $${change.toFixed(2)}`
         } else {
-          changeDisplay.textContent = 'La cantidad dada por el cliente es menor que el total a pagar!'
+          changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar!'
         }
       })
     }
@@ -165,4 +167,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
 
