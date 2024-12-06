@@ -99,11 +99,354 @@
         "type" : "Especiales"
       },
       {
-        "name": "",
-        "price": 4000,
+        "name": "Fresas con Crema",
+        "price": 12000,
         "cost": 0,
         "image": "/assets/frupalette_logo.jpg",
-        "type" : "Especiales"
+        "type" : "Helados"
+      },
+      {
+        "name": "Brownie con Helado",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Helados"
+      },
+      {
+        "name": "Ensalada de Frutas con Helado",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Helados"
+      },
+      {
+        "name": "Vaso Oreo",
+        "price": 7000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Helados"
+      },
+      {
+        "name": "Vaso Sencillo",
+        "price": 5000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Helados"
+      },
+      {
+        "name": "Cono Sencillo",
+        "price": 3500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Helados"
+      },
+      {
+        "name": "Cono Doble",
+        "price": 5000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Helados"
+      },
+      {
+        "name": "Herseys Relleno de Baileys",
+        "price": 5400,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Deluxe"
+      },
+      {
+        "name": "Milo",
+        "price": 5400,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Deluxe"
+      },
+      {
+        "name": "Pistacho",
+        "price": 5400,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Deluxe"
+      },
+      {
+        "name": "Fresa Rellena de Hersey",
+        "price": 5400,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Deluxe"
+      },
+      {
+        "name": "Cubierta Chocolate Blanco",
+        "price": 5400,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Deluxe"
+      },
+      {
+        "name": "Fresa Cubierta de Chocolate",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Vainilla Cubierta de Chocolate",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Maracuya con Leche Condensada",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Mora con Leche Condensada",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Coco Arequipe",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Guanabana Arequipe",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Aguacate con Leche Condensada",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Banano Nutella",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Fresa con Leche Condensada",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Cafe Relleno con Arequipe",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Chocolate Rellena de Mora",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Chocolate Rellena de Arequipe",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Choc Blanco Relleno de Frambuesa",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Fresas con Crema",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Rellenas"
+      },
+      {
+        "name": "Limonada de Hierbabuena",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Mango Biche Ginger",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Mango Biche",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Piña Hierbabuena",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Limonada de Coco",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Corozo",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Fresa",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Limon",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Lulo",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Mango",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Maracuya",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Mora",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Piña",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Sandia",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Tamarindo",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Uva",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Mandarina",
+        "price": 10000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Frappe"
+      },
+      {
+        "name": "Galleta Sultana",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
+      },
+      {
+        "name": "Lluvia de Chocolate",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
+      },
+      {
+        "name": "Lluvia de Colores",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
+      },
+      {
+        "name": "Galleta Oreo Triturada",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
+      },
+      {
+        "name": "Mani",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
+      },
+      {
+        "name": "Leche Condensada",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
+      },
+      {
+        "name": "Cobertura de Chocolate",
+        "price": 1000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Topping"
       },
       {
         "name": "Corozo",
@@ -188,6 +531,279 @@
         "cost": 0,
         "image": "/assets/frupalette_logo.jpg",
         "type" : "Agua"
+      },
+      {
+        "name": "Mango",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Zapote",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Nispero",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Guanabana",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Chocolate",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Arequipe",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Ron con Pasas",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Kola con Leche",
+        "price": 3800,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Leche"
+      },
+      {
+        "name": "Mango",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Mora",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Maracuya",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Frutos Rojos",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Con Frutas",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Yogurt",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Fresa",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Kiwi",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Yogurt Relleno de Uchuva",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Yogurt"
+      },
+      {
+        "name": "Maracuya",
+        "price": 11000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Sodas"
+      },
+      {
+        "name": "Fresa",
+        "price": 11000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Sodas"
+      },
+      {
+        "name": "Mango Biche",
+        "price": 11000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Sodas"
+      },
+      {
+        "name": "Limon",
+        "price": 11000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Sodas"
+      },
+      {
+        "name": "Lulo",
+        "price": 11000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Sodas"
+      },
+      {
+        "name": "Baileys",
+        "price": 4500,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Licor"
+      },
+      {
+        "name": "Yogurt Frutos Rojos(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Cafe Arequipe(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Yogurt Fruta(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Vainilla Oreo(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Chocolate(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Arequipe(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Vainilla Brownie(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Mini Chips(9)",
+        "price": 12000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas9onz"
+      },
+      {
+        "name": "Yogurt Frutos Rojos(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Cafe Arequipe(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Yogurt Fruta(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Vainilla Oreo(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Chocolate(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Arequipe(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Vainilla Brownie(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
+      },
+      {
+        "name": "Mini Chips(12)",
+        "price": 14000,
+        "cost": 0,
+        "image": "/assets/frupalette_logo.jpg",
+        "type" : "Malteadas12onz"
       },
       {
         "name": "Agua",
