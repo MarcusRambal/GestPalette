@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         productRow.innerHTML = `
           <td>${product.name}</td>
           <td>
-          <input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.name}">
+          <input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.id}">
          </td>
           <td>$${product.price.toFixed(2)}</td>
           <td>
