@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const amountPaidInput = document.getElementById('amount-paid')
   const changeReturn = document.getElementById('change-return')
   const calculateReturnButton = document.querySelector('.calculate-return-button')
+  const payButtom = document.querySelector('.pay-button')
   const selectedProducts = {}
 
   try {
@@ -66,11 +67,11 @@ document.addEventListener('DOMContentLoaded', async () => {
           <td>
           <input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.id}">
          </td>
-          <td>$${product.price.toFixed(2)}</td>
+          <td>$${product.price.toLocaleString('es-CO')}</td>
           <td>
           <input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.id}">
           </td>
-          <td class="total-cell">$${productTotal.toFixed(2)}</td>
+          <td class="total-cell">$${productTotal.toLocaleString('es-CO')}</td>
           <td><button class="delete-product" data-product-id="${product.id}">Eliminar</button></td>
           `
         selectedProductsTableBody.appendChild(productRow)
@@ -129,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const amountPaid = parseFloat(amountPaidInput.value) || 0
         const change = amountPaid - total
         if (change >= 0) {
-          changeReturn.textContent = `Vuelto: $${change.toFixed(2)}`
+          changeReturn.textContent = `Vuelto: $${change.toLocaleString('es-CO')}`
         } else {
           changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar!'
         }
@@ -140,12 +141,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       let total = 0
 
       document.querySelectorAll('.total-cell').forEach(cell => {
-        total += parseFloat(cell.textContent.replace('$', '')) || 0
+        const numericValue = parseFloat(cell.textContent.replace(/\$|,/g, '').replace(/\./g, ''))
+        total += numericValue || 0
       })
 
       const totalDisplay = document.querySelector('#total-display')
       if (totalDisplay) {
-        totalDisplay.textContent = `Total: $${total.toFixed(2)}`
+        totalDisplay.textContent = `Total: $${total.toLocaleString('es-CO')}`
       }
       updateReturn(total)
     }
@@ -163,9 +165,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('input[name="category"]').forEach(checkbox => {
       checkbox.addEventListener('change', filterProducts)
     })
+
+    payButtom.addEventListener('click', () => {
+      const totalDisplay = document.querySelector('#total-display')
+      const total = parseFloat(totalDisplay.textContent.replace('Total: $', '').replace(/,/g, '')) || 0
+      const amountPaid = parseFloat(amountPaidInput.value) || 0
+
+      if (amountPaid < total) {
+        changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
+        console.log('la cantidad paga es menor')
+      }
+
+      console.log('pago realizado con exito')
+
+      // Implementar base de datos
+
+      selectedProductsTableBody.innerHTML = ''
+      amountPaidInput.value = ''
+      changeReturn.textContent = 'Vuelto: $0.00'
+      document.querySelector('#total-display').textContent = 'Total: $0.00'
+      Object.keys(selectedProducts).forEach(key => delete selectedProducts[key])
+    })
   } catch (error) {
     console.error('Error al cargar productos:', error)
   }
 })
-
 
