@@ -34,8 +34,7 @@ app.whenReady().then(() => {
 
   // Enviar productos al renderer
   ipcMain.handle('get-products', () => products)
-  console.log('Productos enviados al renderer: ', products)
-  return products
+  //console.log('Productos enviados al renderer: ', products)
 })
 
 app.on('window-all-closed', () => {
