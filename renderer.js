@@ -166,20 +166,56 @@ document.addEventListener('DOMContentLoaded', async () => {
       checkbox.addEventListener('change', filterProducts)
     })
 
-    payButtom.addEventListener('click', () => {
+    async function saveInvoice (invoice) {
+      try {
+        await window.paletteAPI.Invoice.addInvoice(invoice)
+        console.log('Entre a (saveInvoice)', invoice)
+      } catch (error) {
+        console.error('Error al guardar la factura:', error)
+      }
+    }
+
+    payButtom.addEventListener('click', async () => {
       const totalDisplay = document.querySelector('#total-display')
       const total = parseFloat(totalDisplay.textContent.replace('Total: $', '').replace(/,/g, '')) || 0
       const amountPaid = parseFloat(amountPaidInput.value) || 0
+      const paymentMethods = document.querySelectorAll('input[name="payment"]:checked')
+      let paymentType = 'efectivo' // Valor por defecto
+
+      if (paymentMethods.length > 0) {
+        paymentType = paymentMethods[0].value // 'efectivo' o 'tarjeta'
+      }
 
       if (amountPaid < total) {
         changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
         console.log('la cantidad paga es menor')
       }
 
-      console.log('pago realizado con exito')
+      // Verificar que paymentType sea un valor válido
+      if (!['efectivo', 'tarjeta'].includes(paymentType)) {
+        paymentType = 'efectivo' // Valor por defecto
+      }
 
       // Implementar base de datos
+      const invoice = {
+        productos: Object.values(selectedProducts).map(product => ({
+          nombre: product.name,
+          cantidad: product.quantity,
+          precio: product.price,
+          descuento: product.discount,
+          total: product.quantity * product.price * ((100 - product.discount) / 100)
+        })),
+        total: parseFloat(totalDisplay.textContent.replace('Total: $', '').replace(/,/g, '')),
+        tipoPago: paymentType
+      }
 
+      try {
+        await saveInvoice(invoice)
+        console.log('saveInvoice genero la factura correctamente ', invoice)
+      } catch (error) {
+        console.log('Error al procesar el pago', error)
+      }
+      // reiniciar interfaz y objetos
       selectedProductsTableBody.innerHTML = ''
       amountPaidInput.value = ''
       changeReturn.textContent = 'Vuelto: $0.00'
