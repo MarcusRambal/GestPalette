@@ -15,10 +15,10 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
     db.serialize(() => {
       db.run(`
         CREATE TABLE IF NOT EXISTS Invoices (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          payment_type TEXT NOT NULL,
-          total REAL NOT NULL,
-          created_at TEXT DEFAULT (datetime('now', 'localtime'))
+          id INTEGER PRIMARY KEY AUTOINCREMENT,       -- ID único de la factura
+          payment_type TEXT NOT NULL,                 -- Tipo de pago (efectivo, tarjeta, etc.)
+          total REAL NOT NULL,                        -- Total de la factura
+          created_at TEXT DEFAULT (datetime('now', 'localtime')) -- Fecha y hora de creación
         )
       `, (err) => {
         if (err) {
@@ -31,14 +31,14 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
       // Crear tabla de productos de la factura
       db.run(`
         CREATE TABLE IF NOT EXISTS InvoiceItems (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          invoice_id INTEGER NOT NULL,
-          product_name TEXT NOT NULL,
-          quantity INTEGER NOT NULL,
-          price REAL NOT NULL,
-          discount REAL NOT NULL DEFAULT 0,
-          total REAL NOT NULL,
-          FOREIGN KEY (invoice_id) REFERENCES Invoices (id)
+          id INTEGER PRIMARY KEY AUTOINCREMENT,       -- ID único de los productos en la factura
+          invoice_id INTEGER NOT NULL,                -- ID de la factura a la que pertenece este producto
+          product_name TEXT NOT NULL,                 -- Nombre del producto
+          quantity INTEGER NOT NULL,                  -- Cantidad del producto
+          price REAL NOT NULL,                        -- Precio unitario del producto
+          discount REAL NOT NULL DEFAULT 0,           -- Descuento aplicado al producto
+          total REAL NOT NULL,                        -- Total para este producto (cantidad * precio * descuento)
+          FOREIGN KEY (invoice_id) REFERENCES Invoices (id) -- Relación con la tabla Invoices
         )
       `, (err) => {
         if (err) {
@@ -52,6 +52,78 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
 })
 
 // funciones que trabajen con la base de datos
+// Función para agregar una factura y sus productos
+ipcMain.handle('db:add-invoice', (event, invoice) => {
+  // Insertar la factura en la tabla Invoices
+  const { productos, total, tipoPago } = invoice
+
+  db.serialize(() => {
+    // Insertar la factura
+    db.run(`
+      INSERT INTO Invoices (payment_type, total)
+      VALUES (?, ?)
+    `, [tipoPago, total], function (err) {
+      if (err) {
+        console.error('Error al insertar factura:', err)
+        return
+      }
+
+      const invoiceId = this.lastID // Obtener el ID
+
+      // Insertar los productos de la factura en la tabla InvoiceItems
+      const stmt = db.prepare(`
+        INSERT INTO InvoiceItems (invoice_id, product_name, quantity, price, discount, total)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `)
+
+      productos.forEach(product => {
+        stmt.run(
+          invoiceId,
+          product.nombre,
+          product.cantidad,
+          product.precio,
+          product.descuento,
+          product.total
+        )
+      })
+
+      stmt.finalize()
+
+      console.log('Factura insertada correctamente con ID:', invoiceId)
+    })
+  })
+})
+
+/* ipcMain.handle('db:getinvoice', (event, invoiceId) => {
+  db.serialize(() => {
+    // Obtener la factura
+    db.get(`
+      SELECT * FROM Invoices WHERE id = ?
+    `, [invoiceId], (err, invoice) => {
+      if (err) {
+        console.error('Error al obtener factura:', err)
+        return
+      }
+
+      if (invoice) {
+        // Obtener los productos de la factura
+        db.all(`
+          SELECT * FROM InvoiceItems WHERE invoice_id = ?
+        `, [invoiceId], (err, items) => {
+          if (err) {
+            console.error('Error al obtener productos de la factura:', err)
+            return
+          }
+
+          invoice.items = items // Añadir los productos a la factura
+          event.reply('invoice-details', invoice) // Enviar la factura con los productos a historysubpage
+        })
+      } else {
+        event.reply('invoice-details', null)
+      }
+    })
+  })
+}) */
 
 // Cargar productos al inicio
 try {
@@ -89,4 +161,5 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
+
 
