@@ -22,16 +22,11 @@
       <nav class="nav">
         <a href="./index.html" class="nav-link">Inicio</a>
         <a href="./balance.html" class ="nav-link">Balance</a>
-        <a href="./products.html" class="nav-link">Gestor de Productos</a>
         <a href="./stats.html" class="nav-link">Estadisticas</a>
         <a href="./history.html" class="nav-link">Historial</a>
 
       </nav>
   </header>
-
-  <button id = "boton">presioname</button>
-  <p id = "mensaje"></p>
-
 
   <div class="main-container">
     <!-- Barra lateral de filtros rápidos -->
@@ -51,17 +46,9 @@
           Deluxe
         </label>
         <label>
-          <input type="checkbox" name="category" value="Sodas">
-          Sodas
-        </label>
-        <label>
-          <input type="checkbox" name="category" value="Licor">
-          Licor
-        </label>
-        <label>
           <input type="checkbox" name="category" value="Rellenas">
           Rellenas
-        </label>
+        </label>      
         <label>
           <input type="checkbox" name="category" value="Frappe">
           Frappe
@@ -75,14 +62,6 @@
           Agua
         </label>
         <label>
-          <input type="checkbox" name="category" value="Malteadas">
-          Malteadas
-        </label>
-        <label>
-          <input type="checkbox" name="category" value="Bebidas">
-          Bebidas
-        </label>
-        <label>
           <input type="checkbox" name="category" value="Leche">
           Leche
         </label>
@@ -90,6 +69,28 @@
           <input type="checkbox" name="category" value="Yogurt">
           Yogurt
         </label>
+        <label>
+          <input type="checkbox" name="category" value="Sodas">
+          Sodas
+        </label> 
+        <label>
+          <input type="checkbox" name="category" value="Licor">
+          Licor
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="Malteadas9onz">
+          Malteadas(9onz)
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="Malteadas12onz">
+          Malteadas(12onz)
+        </label>
+        <label>
+          <input type="checkbox" name="category" value="Bebidas">
+          Bebidas
+        </label>
+        
+        
       </form>
     </div>
   
@@ -119,22 +120,7 @@
             </tr>
           </thead>
           <tbody>
-            <!-- Ejemplo de productos seleccionados -->
-            <tr>
-              <td>Producto 1</td>
-              <td><input type="number" value="2" class="quantity-input" min="1"></td>
-              <td>$100.00</td>
-              <td><input type="number" value="0" class="discount-input" min="0" max="100"></td>
-              <td class="total-price">$200.00</td>
-            </tr>
-            <tr>
-              <td>Producto 2</td>
-              <td><input type="number" value="1" class="quantity-input" min="1"></td>
-              <td>$150.00</td>
-              <td><input type="number" value="10" class="discount-input" min="0" max="100"></td>
-              <td class="total-price">$135.00</td>
-            </tr>
-            <!-- Más productos seleccionados -->
+            <!-- Productos dinamicamente mostrados aqui -->
           </tbody>
         </table>
       </div>
@@ -144,21 +130,45 @@
 
       <!-- Contenedor de pago dentro de selected-products-container -->
       <div class="payment-container">
-        <h2>Total: $335.00</h2>
+        <h2 id="total-display">Total: $0.00</h2>
+        
         <div class="payment-options">
           <label>
-            <input type="checkbox" name="payment" value="efectivo">
+            <input type="radio" name="payment" value="efectivo" id="efectivo">
             Efectivo
           </label>
           <label>
-            <input type="checkbox" name="payment" value="tarjeta">
+            <input type="radio" name="payment" value="tarjeta" id="tarjeta">
             Tarjeta
           </label>
         </div>
+
+        <div class="amount-container">
+          <label for="amount-paid">Cantidad dada por el cliente:</label>
+          <input type="number" id="amount-paid" min="0" placeholder="Ingrese monto" />
+        </div>
+        
+        <!-- Espacio para mostrar el vuelto -->
+        <div class="change-container">
+          <p id="change-return">Vuelto: $0.00</p>
+        </div>
+        <!-- Botón para calcular el vuelto -->
+        <button class="calculate-return-button">Calcular Vuelto</button>
+
         <button class="pay-button">Pagar</button>
+      </div><!--payment-container-->
+    </div> <!--selected-produtcs-container-->
+    <!-- 
+    <div id="confirmation-modal" class="modal hidden">
+      <div class="modal-content">
+        <p>¿Estás seguro de que deseas realizar el pago?</p>
+        <button id="confirm-payment" class="confirm-button">Sí, confirmar</button>
+        <button id="cancel-payment" class="cancel-button">Cancelar</button>
       </div>
     </div>
+    -->
   </div> <!--main-container-->
 </body>
 <script src ="../renderer.js"></script>
 </html>
+
