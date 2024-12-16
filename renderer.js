@@ -38,13 +38,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateProductList(products)
 
     function addProductToSelection (product) {
-      const productId = `${product.name}_${product.type}_${product.price}`
+      const productId = product.id
       if (selectedProducts[productId]) {
         selectedProducts[productId].quantity += 1
       } else {
         selectedProducts[productId] = {
           ...product,
-          id: productId,
           quantity: 1,
           discount: 0
         }
@@ -96,24 +95,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       const input = event.target
       const productId = input.getAttribute('data-product-id')
       const quantity = parseInt(input.value) || 0
-      const product = selectedProducts[productId]
 
-      if (product) {
-        product.quantity = quantity
-        updateSelectedProductsTable()
-      }
+      selectedProducts[productId].quantity = quantity
+      updateSelectedProductsTable()
     }
 
     function handleDiscountChange (event) {
       const input = event.target
       const productId = input.getAttribute('data-product-id')
       const discount = Math.min(Math.max(parseFloat(input.value) || 0, 0), 100)
-      const product = selectedProducts[productId]
 
-      if (product) {
-        product.discount = discount
-        updateSelectedProductsTable()
-      }
+      selectedProducts[productId].discount = discount
+      updateSelectedProductsTable()
     }
 
     function handleDeleteProduct (event) {
@@ -175,9 +168,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     }
 
+    function calculateTotalFromProducts (selectedProducts) {
+      return Object.values(selectedProducts).reduce((acc, product) => {
+        return acc + (product.quantity * product.price * ((100 - product.discount) / 100))
+      }, 0)
+    }
+
     payButtom.addEventListener('click', async () => {
-      const totalDisplay = document.querySelector('#total-display')
-      const total = parseFloat(totalDisplay.textContent.replace('Total: $', '').replace(/,/g, '')) || 0
+      const total = calculateTotalFromProducts(selectedProducts)
+      console.log(total)
+      // cambiar el como se agarra el total ya que se puede modificar desde consola
       const amountPaid = parseFloat(amountPaidInput.value) || 0
       const paymentMethods = document.querySelectorAll('input[name="payment"]:checked')
       let paymentType = 'efectivo' // Valor por defecto
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           descuento: product.discount,
           total: product.quantity * product.price * ((100 - product.discount) / 100)
         })),
-        total: parseFloat(totalDisplay.textContent.replace('Total: $', '').replace(/,/g, '')),
+        total: calculateTotalFromProducts(selectedProducts),
         tipoPago: paymentType
       }
 
@@ -226,4 +226,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
 
