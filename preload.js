@@ -18,6 +18,11 @@ contextBridge.exposeInMainWorld('paletteAPI', {
     // console.log('Llamando a db:getinvoice para la factura con id:', invoiceId)
       return await ipcRenderer.invoke('db:getinvoice', invoiceId)
     }
+  },
+  Operations: {
+    calcTotal: async (product) => {
+      console.log('Llamando a calc-total desde renderer', product)
+      return await ipcRenderer.invoke('calc-total', product)
+    }
   }
 })
-
