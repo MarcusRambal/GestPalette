@@ -52,42 +52,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Actualizar tabla de productos seleccionados
-    function updateSelectedProductsTable () {
-      selectedProductsTableBody.innerHTML = ''
-      // eslint-disable-next-line no-unused-vars
-      let total = 0
-      Object.values(selectedProducts).forEach(product => {
-        const productTotal = product.quantity * product.price * ((100 - product.discount) / 100)
-        total += productTotal
+    //hacer pruebas mas robustas revisar mejor
+    async function updateSelectedProductsTable () {
+      const fragment = document.createDocumentFragment()
+      const selectedProductsContainer = document.querySelector('.selected-products-container')
+      // Ocultar contenedor durante la actualización
+      selectedProductsContainer.classList.add('hidden')
 
+      // Eliminar filas sin usar innerHTML
+      while (selectedProductsTableBody.firstChild) {
+        selectedProductsTableBody.removeChild(selectedProductsTableBody.firstChild)
+      }
+
+      for (const product of Object.values(selectedProducts)) {
+        const productTotal = await window.paletteAPI.Operations.calcTotal(product)
+
+        // Crear la fila
         const productRow = document.createElement('tr')
+        productRow.classList.add('adding') // Clase de animación inicial
+
         productRow.innerHTML = `
           <td>${product.name}</td>
           <td>
-          <input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.id}">
-         </td>
+            <input type="number" value="${product.quantity}" class="quantity-input" min="1" data-product-id="${product.id}">
+          </td>
           <td>$${product.price.toLocaleString('es-CO')}</td>
           <td>
-          <input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.id}">
+            <input type="number" value="${product.discount}" class="discount-input" min="0" max="100" data-product-id="${product.id}">
           </td>
           <td class="total-cell">$${productTotal.toLocaleString('es-CO')}</td>
           <td><button class="delete-product" data-product-id="${product.id}">Eliminar</button></td>
-          `
-        selectedProductsTableBody.appendChild(productRow)
-      })
+        `
 
-      document.querySelectorAll('.discount-input').forEach(input => {
-        input.addEventListener('input', handleDiscountChange)
-      })
-      document.querySelectorAll('.quantity-input').forEach(input => {
-        input.addEventListener('input', handleQuantityChange)
-      })
+        // Agregar eventos
+        productRow.querySelector('.discount-input').addEventListener('input', handleDiscountChange)
+        productRow.querySelector('.quantity-input').addEventListener('input', handleQuantityChange)
+        productRow.querySelector('.delete-product').addEventListener('click', handleDeleteProduct)
 
-      document.querySelectorAll('.delete-product').forEach(button => {
-        button.addEventListener('click', handleDeleteProduct)
-      })
+        // Agregar la fila al fragmento
+        fragment.appendChild(productRow)
 
-      // Actualizar el total en la vista
+        setTimeout(() => {
+          productRow.classList.remove('adding')
+          productRow.classList.add('added')
+        }, 50)
+      }
+
+      // Agregar todo el fragmento al DOM de una sola vez
+      selectedProductsTableBody.appendChild(fragment)
+
+      // Mostrar el contenedor nuevamente
+      /*  setTimeout(() => {
+        selectedProductsContainer.classList.remove('hidden')
+      }, 300)
+      */
+      // Actualizar el total
       updateTotal()
     }
 
