@@ -9,25 +9,7 @@
 </head>
 
 <body>
-  <!-- Header -->
-  <header class="header">
-    <!-- Logo -->
-    <div class="logo">
-      <div class="logo-box">
-        <img src="../assets/frupalette_logo.jpg" alt="Frupalette" class="logo-image">
-        <h1 class="logo-text">Frupalette</h1>
-      </div>
-    </div>
-      <!-- Navigation -->
-      <nav class="nav">
-        <a href="./index.html" class="nav-link">Inicio</a>
-        <a href="./balance.html" class ="nav-link">Balance</a>
-        <a href="./stats.html" class="nav-link">Estadisticas</a>
-        <a href="./history.html" class="nav-link">Historial</a>
-
-      </nav>
-  </header>
-
+    <!-- #header-->
   <div class="main-container">
     <!-- Barra lateral de filtros rápidos -->
     <div class="filter-section">
@@ -127,36 +109,7 @@
 
       <!-- Línea separadora -->
       <hr class="separator">
-
-      <!-- Contenedor de pago dentro de selected-products-container -->
-      <div class="payment-container">
-        <h2 id="total-display">Total: $0.00</h2>
-        
-        <div class="payment-options">
-          <label>
-            <input type="radio" name="payment" value="efectivo" id="efectivo">
-            Efectivo
-          </label>
-          <label>
-            <input type="radio" name="payment" value="tarjeta" id="tarjeta">
-            Tarjeta
-          </label>
-        </div>
-
-        <div class="amount-container">
-          <label for="amount-paid">Cantidad dada por el cliente:</label>
-          <input type="number" id="amount-paid" min="0" placeholder="Ingrese monto" />
-        </div>
-        
-        <!-- Espacio para mostrar el vuelto -->
-        <div class="change-container">
-          <p id="change-return">Vuelto: $0.00</p>
-        </div>
-        <!-- Botón para calcular el vuelto -->
-        <button class="calculate-return-button">Calcular Vuelto</button>
-
-        <button class="pay-button">Pagar</button>
-      </div><!--payment-container-->
+      
     </div> <!--selected-produtcs-container-->
     <!-- 
     <div id="confirmation-modal" class="modal hidden">
@@ -168,7 +121,45 @@
     </div>
     -->
   </div> <!--main-container-->
+  <div class="payment-container">
+    <!-- Contenedor izquierdo (Navegación vacía por ahora) -->
+    <div class="payment-left">
+      <!-- Espacio reservado para navegación -->
+    </div>
+  
+    <!-- Contenedor derecho (Sección de pago) -->
+    <div class="payment-right">
+      <!-- Contenedor para "Cantidad dada" y "Vuelto" -->
+      <div class="amount-and-change">
+        <div class="amount-container">
+          <label for="amount-paid">Cantidad dada por el cliente:</label>
+          <input type="number" id="amount-paid" min="0" placeholder="Ingrese monto" />
+        </div>
+        <div class="change-container">
+          <p id="change-return">Vuelto: $0.00</p>
+        </div>
+        <button class="calculate-return-button">Calcular Vuelto</button>
+      </div>
+  
+      <!-- Contenedor para Total, Radio Buttons y Botón de pago -->
+      <div class="total-and-payment">
+        <h2 id="total-display">Total: $0.00</h2>
+        <div class="payment-options">
+          <label>
+            <input type="radio" name="payment" value="efectivo" id="efectivo">
+            Efectivo
+          </label>
+          <label>
+            <input type="radio" name="payment" value="tarjeta" id="tarjeta">
+            Tarjeta
+          </label>
+        </div>
+        <button class="pay-button">Pagar</button>
+      </div>
+    </div>
+  </div>
 </body>
 <script src ="../renderer.js"></script>
 </html>
+
 
