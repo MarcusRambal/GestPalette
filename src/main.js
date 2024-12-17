@@ -156,6 +156,17 @@ app.whenReady().then(() => {
   // Enviar productos al renderer
   ipcMain.handle('get-products', () => products)
   // console.log('Productos enviados al renderer: ', products)
+  ipcMain.handle('calc-total', (event, product) => {
+    const { quantity, price, discount } = product
+
+    // Validar que los valores no sean undefined
+    if (typeof quantity !== 'number' || typeof price !== 'number' || typeof discount !== 'number') {
+      throw new Error('Los valores enviados son inválidos')
+    }
+    const total = quantity * price * ((100 - discount) / 100)
+    console.log('total enviado desde el main:', quantity, price, discount)
+    return total
+  })
 })
 
 app.on('window-all-closed', () => {
