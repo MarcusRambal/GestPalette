@@ -372,3 +372,7 @@ tr.added {
   opacity: 1;
   transform: translateY(0); /* Restablece a la posición original */
 }
+
+.multipago-container {
+  display: none;
+}
