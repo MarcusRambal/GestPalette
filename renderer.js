@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const changeReturn = document.getElementById('change-return')
   const calculateReturnButton = document.querySelector('.calculate-return-button')
   const payButtom = document.querySelector('.pay-button')
+  const radioButton = document.querySelectorAll('input[name="payment"]')
+  const multipagoContainer = document.querySelector('.multipago-container')
+  const multiefectivo = document.getElementById('amount-paid-efectivo')
+  const multiother = document.getElementById('amount-paid-other')
   const selectedProducts = {}
 
   try {
@@ -192,25 +196,53 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 0)
     }
 
+    radioButton.forEach((rbutton) => {
+      rbutton.addEventListener('change', (event) => {
+        const selectedPayment = event.target.value
+        if (selectedPayment === 'multipago') {
+          multipagoContainer.style.display = 'block' // Mostrar
+        } else {
+          multipagoContainer.style.display = 'none' // Ocultar
+        }
+      })
+    })
+
+    /* multiefectivo.addEventListener('input', (event) => {
+      console.log('Valor en efectivo: ', event.target.value)
+    }) */
+
+    /* multiother.addEventListener('input', (event) => {
+      console.log('Valor en other:', event.target.value)
+    }) */
+
+    /* Validar que esto no se pueda dar sin antes tener valores y ademas agregar
+    boton de confirmacion */
+
     payButtom.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
       console.log(total)
       // cambiar el como se agarra el total ya que se puede modificar desde consola
-      const amountPaid = parseFloat(amountPaidInput.value) || 0
-      const paymentMethods = document.querySelectorAll('input[name="payment"]:checked')
-      let paymentType = 'efectivo' // Valor por defecto
 
-      if (paymentMethods.length > 0) {
-        paymentType = paymentMethods[0].value // 'efectivo' o 'tarjeta'
-      }
+      // Validar que estos campos no esten vacios
+      const amoundPaidEfectivo = parseFloat(multiefectivo.value)
+      // console.log(amoundPaidEfectivo)
+      const amountPaidOther = parseFloat(multiother.value)
+      // console.log(amountPaidOther)
+
+      const pagos = [amoundPaidEfectivo, amountPaidOther]
+      // console.log(pagos)
+
+      const amountPaid = parseFloat(amountPaidInput.value) || 0
+      const paymentMethods = document.querySelector('input[name="payment"]:checked')
+      console.log(paymentMethods)
+      let paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
 
       if (amountPaid < total) {
         changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
         console.log('la cantidad paga es menor')
       }
 
-      // Verificar que paymentType sea un valor válido
-      if (!['efectivo', 'tarjeta'].includes(paymentType)) {
+      if (!['efectivo', 'tarjeta', 'transferencia', 'multipago'].includes(paymentType)) {
         paymentType = 'efectivo' // Valor por defecto
       }
 
@@ -224,7 +256,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           total: product.quantity * product.price * ((100 - product.discount) / 100)
         })),
         total: calculateTotalFromProducts(selectedProducts),
-        tipoPago: paymentType
+        tipoPago: paymentType,
+        multipagos: paymentType === 'multipago' ? pagos : null
       }
 
       try {
@@ -236,6 +269,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       // reiniciar interfaz y objetos
       selectedProductsTableBody.innerHTML = ''
       amountPaidInput.value = ''
+      multiefectivo.value = ''
+      multiother.value = ''
       changeReturn.textContent = 'Vuelto: $0.00'
       document.querySelector('#total-display').textContent = 'Total: $0.00'
       Object.keys(selectedProducts).forEach(key => delete selectedProducts[key])
