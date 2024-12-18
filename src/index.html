@@ -153,7 +153,25 @@
             <input type="radio" name="payment" value="tarjeta" id="tarjeta">
             Tarjeta
           </label>
+          <label>
+            <input type="radio" name="payment" value="transferencia" id="transferencia">
+            Transferencia
+          </label>
+          <label>
+            <input type="radio" name="payment" value="multipago" id="multipago">
+            Multipago
+          </label>
         </div>
+        <!--Que se muestre solo al seleccionar el radio button de multipago-->
+        <div class ="multipago-container">
+          <label for="amount-paid-efectivo">Efectivo</label>
+          <label for="amount-paid-efectivo"></label>
+          <input type="number" id="amount-paid-efectivo" min="0" placeholder="Efectivo" />
+          <br>
+          <label for="amount-paid-other">Tarjeta</label>
+          <input type="number" id="amount-paid-other" min="0" placeholder="Tarjeta o tranferencia" />
+        </div>
+        
         <button class="pay-button">Pagar</button>
       </div>
     </div>
