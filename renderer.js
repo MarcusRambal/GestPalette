@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Actualizar tabla de productos seleccionados
-    //hacer pruebas mas robustas revisar mejor
     async function updateSelectedProductsTable () {
       const fragment = document.createDocumentFragment()
       const selectedProductsContainer = document.querySelector('.selected-products-container')
@@ -245,5 +244,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
-
 
