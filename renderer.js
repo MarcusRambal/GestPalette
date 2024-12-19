@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const { products } = await window.paletteAPI.Products.getProducts() // Extrae 'products'
-
     if (!products || products.length === 0) {
       console.log('No se encontraron productos en el archivo config.json.')
       return
@@ -195,7 +194,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return acc + (product.quantity * product.price * ((100 - product.discount) / 100))
       }, 0)
     }
-
     radioButton.forEach((rbutton) => {
       rbutton.addEventListener('change', (event) => {
         const selectedPayment = event.target.value
@@ -234,7 +232,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       const amountPaid = parseFloat(amountPaidInput.value) || 0
       const paymentMethods = document.querySelector('input[name="payment"]:checked')
-      console.log(paymentMethods)
       let paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
 
       if (amountPaid < total) {
@@ -257,9 +254,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         })),
         total: calculateTotalFromProducts(selectedProducts),
         tipoPago: paymentType,
-        multipagos: paymentType === 'multipago' ? pagos : null
+        multipagos: paymentType === 'multipago' ? pagos : []
       }
-
+      console.log(invoice.tipoPago)
+      console.log(invoice.multipagos)
       try {
         await saveInvoice(invoice)
         console.log('saveInvoice genero la factura correctamente ', invoice)
@@ -279,4 +277,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
 
