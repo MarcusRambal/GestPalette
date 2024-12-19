@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('paletteAPI', {
   Invoice: {
     addInvoice: async (invoice) => {
     // console.log('Llamando a db:add-invoice desde renderer con los datos:', invoice)
+      console.log(invoice)
       return await ipcRenderer.invoke('db:add-invoice', invoice)
     },
     getInvoice: async (invoiceId) => {
