@@ -3,7 +3,6 @@ const path = require('path')
 const fs = require('fs')
 const sqlite3 = require('sqlite3').verbose()
 let products = []
-
 // Configuración de la base de datos
 const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
   if (err) {
@@ -18,6 +17,8 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
           id INTEGER PRIMARY KEY AUTOINCREMENT,       -- ID único de la factura
           payment_type TEXT NOT NULL,                 -- Tipo de pago (efectivo, tarjeta, etc.)
           total REAL NOT NULL,                        -- Total de la factura
+          total_efectivo REAL NULL,
+          total_tarjeta REAL NULL,
           created_at TEXT DEFAULT (datetime('now', 'localtime')) -- Fecha y hora de creación
         )
       `, (err) => {
@@ -55,14 +56,33 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
 // Función para agregar una factura y sus productos
 ipcMain.handle('db:add-invoice', (event, invoice) => {
   // Insertar la factura en la tabla Invoices
-  const { productos, total, tipoPago } = invoice
+  console.log('PASADO DESDE LA API: ', invoice)
+  const { productos, total, tipoPago, multipagos } = invoice
+  // console.log('products: ', productos, 'total: ', total, 'tipo de pago: ', tipoPago, 'Multipago:', multipagos)
+  const [efectivo, tarjeta] = multipagos
+  console.log(efectivo, tarjeta)
+
+  /* productos.forEach(product => {
+    const productInConfig = products[product.nombre]
+    console.log(productInConfig)
+    if (!productInConfig) {
+      throw new Error(`Producto ${product.nombre} no encontrado en el archivo config.json`)
+    }
+    if (product.precio !== productInConfig.price) {
+      throw new Error(`El precio de ${product.nombre} ha sido manipulado`)
+    }
+    // Validar cantidad y descuento
+    if (product.cantidad <= 0 || product.descuento < 0 || product.descuento > 100) {
+      throw new Error(`Cantidad o descuento inválido para ${product.nombre}`)
+    }
+  }) */
 
   db.serialize(() => {
     // Insertar la factura
     db.run(`
-      INSERT INTO Invoices (payment_type, total)
-      VALUES (?, ?)
-    `, [tipoPago, total], function (err) {
+      INSERT INTO Invoices (payment_type, total, total_efectivo, total_tarjeta)
+      VALUES (?, ?, ?, ?)
+    `, [tipoPago, total, efectivo, tarjeta], function (err) {
       if (err) {
         console.error('Error al insertar factura:', err)
         return
@@ -130,6 +150,7 @@ try {
   const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf-8')
   products = JSON.parse(data)
   console.log('Productos cargados desde config.json:', products)
+  console.log(typeof (products))
 } catch (error) {
   console.error('Error al leer config.json:', error)
 }
@@ -159,7 +180,6 @@ app.whenReady().then(() => {
   ipcMain.handle('calc-total', (event, product) => {
     const { quantity, price, discount } = product
 
-    // Validar que los valores no sean undefined
     if (typeof quantity !== 'number' || typeof price !== 'number' || typeof discount !== 'number') {
       throw new Error('Los valores enviados son inválidos')
     }
