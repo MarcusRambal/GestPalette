@@ -215,6 +215,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /* Validar que esto no se pueda dar sin antes tener valores y ademas agregar
     boton de confirmacion */
+    /* Validar los campos de entrada para el multipago*/
 
     payButtom.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
