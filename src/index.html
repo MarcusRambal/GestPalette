@@ -74,7 +74,7 @@
         
         
       </form>
-    </div>
+    </div> <!--filter-section-->
   
     <!-- Contenedor principal de productos -->
     <div class="products-container">
@@ -111,15 +111,7 @@
       <hr class="separator">
       
     </div> <!--selected-produtcs-container-->
-    <!-- 
-    <div id="confirmation-modal" class="modal hidden">
-      <div class="modal-content">
-        <p>¿Estás seguro de que deseas realizar el pago?</p>
-        <button id="confirm-payment" class="confirm-button">Sí, confirmar</button>
-        <button id="cancel-payment" class="cancel-button">Cancelar</button>
-      </div>
-    </div>
-    -->
+    
   </div> <!--main-container-->
   <div class="payment-container">
     <!-- Contenedor izquierdo (Navegación vacía por ahora) -->
@@ -139,11 +131,12 @@
           <p id="change-return">Vuelto: $0.00</p>
         </div>
         <button class="calculate-return-button">Calcular Vuelto</button>
-      </div>
+      </div> <!--amount-and-change-->
   
       <!-- Contenedor para Total, Radio Buttons y Botón de pago -->
       <div class="total-and-payment">
         <h2 id="total-display">Total: $0.00</h2>
+        <div id="validation-message-total" class = "validation-message-total"><p>No hay productos seleccionados</p></div>
         <div class="payment-options">
           <label>
             <input type="radio" name="payment" value="efectivo" id="efectivo">
@@ -161,7 +154,7 @@
             <input type="radio" name="payment" value="multipago" id="multipago">
             Multipago
           </label>
-        </div>
+        </div> <!--payment-options-->
         <!--Que se muestre solo al seleccionar el radio button de multipago-->
         <div class ="multipago-container">
           <label for="amount-paid-efectivo">Efectivo</label>
@@ -170,14 +163,31 @@
           <br>
           <label for="amount-paid-other">Tarjeta</label>
           <input type="number" id="amount-paid-other" min="0" placeholder="Tarjeta o tranferencia" />
-        </div>
+        </div> <!--multipago-container-->
         
+        <div id = "validation-message-input" class="validation-message-input">
+          <p>Por favor rellene todos los campos requeridos</p>
+        </div>
+
+        <div id = "validation-message-value" class="validation-message-value">
+          <p>La suma del monto de efectivo y tarjeta es menor que el total</p>
+        </div>
         <button class="pay-button">Pagar</button>
+
+      </div> <!--total-and-payment-->
+    </div> <!--payment-right-->
+
+    <div id="confirmation-modal" class="modal-hidden">
+      <div class="modal-content">
+        <p>¿Estás seguro de que deseas realizar el pago?</p>
+        <button id="confirm-payment" class="confirm-button">Sí, confirmar</button>
+        <button id="cancel-payment" class="cancel-button">Cancelar</button>
       </div>
-    </div>
-  </div>
+    </div> <!--confirmation-modal-->
+  </div> <!--payment-container-->
 </body>
 <script src ="../renderer.js"></script>
 </html>
+
 
 
