@@ -8,12 +8,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const calculateReturnButton = document.querySelector('.calculate-return-button')
   const payButtom = document.querySelector('.pay-button')
   const radioButton = document.querySelectorAll('input[name="payment"]')
+  const paymentMethods = document.querySelector('input[name="payment"]:checked')
   const multipagoContainer = document.querySelector('.multipago-container')
   const multiefectivo = document.getElementById('amount-paid-efectivo')
   const multiother = document.getElementById('amount-paid-other')
   const validationMessageInput = document.getElementById('validation-message-input')
   const validationMessageValue = document.getElementById('validation-message-value')
   const validationMessageTotal = document.getElementById('validation-message-total')
+  const confirmatioModal = document.getElementById('confirmation-modal')
+  const confirmButton = document.getElementById('confirm-payment')
+  const cancelButton = document.getElementById('cancel-payment')
   const selectedProducts = {}
 
   try {
@@ -216,57 +220,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('Valor en other:', event.target.value)
     }) */
 
-    /* Agregar
-    boton de confirmacion */
-
-    payButtom.addEventListener('click', async () => {
+    confirmButton.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
       console.log(total)
-      // cambiar el como se agarra el total ya que se puede modificar desde consola
-      if (total === 0) {
-        validationMessageTotal.style.display = 'block'
-        console.log('No hay productos seleccionados')
-        setTimeout(() => {
-          validationMessageTotal.style.display = 'none'
-        }, 5000)
-        return
-      } else {
-        validationMessageTotal.style.display = 'none'
-      }
-      const multiefectivoValue = multiefectivo.value.trim()
-      const multiotherValue = multiother.value.trim()
 
-      if (!multiefectivoValue || !multiotherValue) {
-        validationMessageInput.style.display = 'block'
-        console.log('Campos de pago incompletos')
-        return
-      } else {
-        validationMessageInput.style.display = 'none'
-      }
-
-      const amoundPaidEfectivo = parseFloat(multiefectivo.value)
-      console.log(amoundPaidEfectivo)
-      const amountPaidOther = parseFloat(multiother.value)
-      console.log(amountPaidOther)
-
-      if (amoundPaidEfectivo + amountPaidOther < total) {
-        validationMessageValue.style.display = 'block'
-        return
-      } else {
-        validationMessageValue.style.display = 'none'
-      }
-
-      const pagos = [amoundPaidEfectivo, amountPaidOther]
-      // console.log(pagos)
-
-      const amountPaid = parseFloat(amountPaidInput.value) || 0
       const paymentMethods = document.querySelector('input[name="payment"]:checked')
       let paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
 
-      if (amountPaid < total) {
-        changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
-        console.log('la cantidad paga es menor')
-      }
+      const amountPaidEfectivo = parseFloat(multiefectivo.value)
+      console.log(amountPaidEfectivo)
+      const amountPaidOther = parseFloat(multiother.value)
+      console.log(amountPaidOther)
+
+      const pagos = [amountPaidEfectivo, amountPaidOther]
+      // console.log(pagos)
 
       if (!['efectivo', 'tarjeta', 'transferencia', 'multipago'].includes(paymentType)) {
         paymentType = 'efectivo' // Valor por defecto
@@ -301,6 +268,61 @@ document.addEventListener('DOMContentLoaded', async () => {
       changeReturn.textContent = 'Vuelto: $0.00'
       document.querySelector('#total-display').textContent = 'Total: $0.00'
       Object.keys(selectedProducts).forEach(key => delete selectedProducts[key])
+      confirmatioModal.style.display = 'none'
+    })
+
+    cancelButton.addEventListener('click', () => {
+      confirmatioModal.style.display = 'none'
+    })
+
+    payButtom.addEventListener('click', async () => {
+      const total = calculateTotalFromProducts(selectedProducts)
+      console.log(total)
+      // cambiar el como se agarra el total ya que se puede modificar desde consola
+      const paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
+
+      if (total === 0) {
+        validationMessageTotal.style.display = 'block'
+        console.log('No hay productos seleccionados')
+        setTimeout(() => {
+          validationMessageTotal.style.display = 'none'
+        }, 5000)
+        return
+      } else {
+        validationMessageTotal.style.display = 'none'
+      }
+
+      const amountPaid = parseFloat(amountPaidInput.value) || 0
+
+      if (amountPaid < total) {
+        changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
+        console.log('la cantidad paga es menor')
+      }
+
+      const multiefectivoValue = multiefectivo.value.trim()
+      const multiotherValue = multiother.value.trim()
+
+      if ((!multiefectivoValue || !multiotherValue) && (paymentType === 'multipago')) {
+        validationMessageInput.style.display = 'block'
+        console.log('Campos de pago incompletos')
+        return
+      } else {
+        validationMessageInput.style.display = 'none'
+      }
+
+      const amountPaidEfectivo = parseFloat(multiefectivo.value)
+      console.log(amountPaidEfectivo)
+      const amountPaidOther = parseFloat(multiother.value)
+      console.log(amountPaidOther)
+
+      if (amountPaidEfectivo + amountPaidOther < total) {
+        validationMessageValue.style.display = 'block'
+        return
+      } else {
+        validationMessageValue.style.display = 'none'
+      }
+
+      confirmatioModal.style.display = 'block'
     })
   } catch (error) {
     console.error('Error al cargar productos:', error)
