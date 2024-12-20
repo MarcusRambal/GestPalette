@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const multipagoContainer = document.querySelector('.multipago-container')
   const multiefectivo = document.getElementById('amount-paid-efectivo')
   const multiother = document.getElementById('amount-paid-other')
+  const validationMessageInput = document.getElementById('validation-message-input')
+  const validationMessageValue = document.getElementById('validation-message-value')
+  const validationMessageTotal = document.getElementById('validation-message-total')
   const selectedProducts = {}
 
   try {
@@ -213,20 +216,45 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('Valor en other:', event.target.value)
     }) */
 
-    /* Validar que esto no se pueda dar sin antes tener valores y ademas agregar
+    /* Agregar
     boton de confirmacion */
-    /* Validar los campos de entrada para el multipago*/
 
     payButtom.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
       console.log(total)
       // cambiar el como se agarra el total ya que se puede modificar desde consola
+      if (total === 0) {
+        validationMessageTotal.style.display = 'block'
+        console.log('No hay productos seleccionados')
+        setTimeout(() => {
+          validationMessageTotal.style.display = 'none'
+        }, 5000)
+        return
+      } else {
+        validationMessageTotal.style.display = 'none'
+      }
+      const multiefectivoValue = multiefectivo.value.trim()
+      const multiotherValue = multiother.value.trim()
 
-      // Validar que estos campos no esten vacios
+      if (!multiefectivoValue || !multiotherValue) {
+        validationMessageInput.style.display = 'block'
+        console.log('Campos de pago incompletos')
+        return
+      } else {
+        validationMessageInput.style.display = 'none'
+      }
+
       const amoundPaidEfectivo = parseFloat(multiefectivo.value)
-      // console.log(amoundPaidEfectivo)
+      console.log(amoundPaidEfectivo)
       const amountPaidOther = parseFloat(multiother.value)
-      // console.log(amountPaidOther)
+      console.log(amountPaidOther)
+
+      if (amoundPaidEfectivo + amountPaidOther < total) {
+        validationMessageValue.style.display = 'block'
+        return
+      } else {
+        validationMessageValue.style.display = 'none'
+      }
 
       const pagos = [amoundPaidEfectivo, amountPaidOther]
       // console.log(pagos)
@@ -278,5 +306,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
-
 
