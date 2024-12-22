@@ -24,18 +24,33 @@
 
     </nav>
   </header>
-  
-    <div class="history-container">
-      <div class ="history"><p>Historial</p>
+
+  <div class ="history"><p>Historial</p></div>
+  <div id = "getFacturasContainer"><button class ="get-facturasButton"> 
+    <p>Obtener Facturas</p>
+  </button></div>
+
+  <div class="history-container">
+    <!-- Sidebar izquierdo con la lista de facturas -->
+    <div class="invoices-sidebar">
+      <h2>Lista de Facturas</h2>
+      <div class="invoices-list">
+        <!-- Las facturas se cargarán aquí dinámicamente -->
       </div>
-      <div class = "invoices-container">
-        <div class = "invoices-sidebar">
-          <div class = "invoices-list">
-            <!--aqui apareceran las facturas-->
-          </div>
-        </div> <!--invoices-sidebar-->
-      </div> <!--invoices-container-->
-    </div> <!--history-container-->
- 
+    </div>
+    
+    <!-- Panel derecho con los detalles de la factura seleccionada -->
+    <div class="invoice-details-container">
+      <h2>Detalles de la Factura</h2>
+      <div class="invoice-details">
+        <p>Selecciona una factura para ver los detalles.</p>
+      </div>
+    </div>
+  </div>
+  
+  <script src="historysubpage.js"></script>
+  
+  
+ <script src="historysubpage.js"></script>
 </body>
 </html>
