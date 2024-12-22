@@ -430,3 +430,51 @@ tr.added {
   color: red;
   font-size: 14px;
 }
+
+/* --------------------------------------------------------------------*/
+
+/* Contenedor de navegación */
+/* Contenedor de navegación */
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 220px;
+  margin: auto;
+}
+
+/* Contenedor de navegación */
+.navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 220px;
+  margin: auto;
+}
+
+/* Estilo de los botones */
+.navigation button {
+  display: flex; 
+  align-items: center;
+  justify-content: flex-start; 
+  background-color: #4CAF50; 
+  color: white; 
+  border: none; 
+  padding: 10px; 
+  font-size: 16px;
+  cursor: pointer; 
+  border-radius: 5px; 
+  transition: background-color 0.3s ease; 
+  text-align: left; 
+}
+
+.navigation button:hover {
+  background-color: #45a049; 
+}
+
+/* Espaciado entre emoji y texto */
+.navigation button .nav-link {
+  margin-left: 8px; 
+  text-decoration: none;
+  color: inherit; 
+}
