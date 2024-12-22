@@ -114,43 +114,12 @@ ipcMain.handle('db:add-invoice', (event, invoice) => {
   })
 })
 
-/* ipcMain.handle('db:getinvoice', (event, invoiceId) => {
-  db.serialize(() => {
-    // Obtener la factura
-    db.get(`
-      SELECT * FROM Invoices WHERE id = ?
-    `, [invoiceId], (err, invoice) => {
-      if (err) {
-        console.error('Error al obtener factura:', err)
-        return
-      }
-
-      if (invoice) {
-        // Obtener los productos de la factura
-        db.all(`
-          SELECT * FROM InvoiceItems WHERE invoice_id = ?
-        `, [invoiceId], (err, items) => {
-          if (err) {
-            console.error('Error al obtener productos de la factura:', err)
-            return
-          }
-
-          invoice.items = items // Añadir los productos a la factura
-          event.reply('invoice-details', invoice) // Enviar la factura con los productos a historysubpage
-        })
-      } else {
-        event.reply('invoice-details', null)
-      }
-    })
-  })
-}) */
-
 // Cargar productos al inicio
 try {
   const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf-8')
   products = JSON.parse(data)
-  console.log('Productos cargados desde config.json:', products)
-  console.log(typeof (products))
+  // console.log('Productos cargados desde config.json:', products)
+  // console.log(typeof (products))
 } catch (error) {
   console.error('Error al leer config.json:', error)
 }
@@ -184,13 +153,53 @@ app.whenReady().then(() => {
       throw new Error('Los valores enviados son inválidos')
     }
     const total = quantity * price * ((100 - discount) / 100)
-    console.log('total enviado desde el main:', quantity, price, discount)
+    // console.log('total enviado desde el main:', quantity, price, discount)
     return total
   })
-})
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
+  ipcMain.handle('history-button', async () => {
+    try {
+      // console.log('Botón de historial presionado')
+      return new Promise((resolve, reject) => {
+        db.all('SELECT * FROM Invoices  ORDER BY created_at DESC', [], (err, rows) => {
+          if (err) {
+            console.error('Error al obtener facturas:', err)
+            reject(err)
+            return
+          }
+          resolve(rows)
+        })
+      })
+    } catch (error) {
+      console.error('Error al manejar el history-button:', error)
+      throw error
+    }
+  })
+
+  ipcMain.handle('get-invoiceDetail', async (event, invoiceId) => {
+    console.log('ID de la factura:', invoiceId)
+    try {
+      return new Promise((resolve, reject) => {
+        // Obtener los productos asociados a la factura por su ID
+        db.all('SELECT * FROM InvoiceItems WHERE invoice_id = ?', [invoiceId], (err, rows) => {
+          if (err) {
+            console.error('Error al obtener productos de la factura:', err)
+            reject(err)
+            return
+          }
+          console.log('Productos de la factura:', rows)
+          resolve(rows) // Enviar los productos de la factura
+        })
+      })
+    } catch (error) {
+      console.error('Error al manejar el get-invoice-details:', error)
+      throw error
+    }
+  })
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+  })
 })
 
 
