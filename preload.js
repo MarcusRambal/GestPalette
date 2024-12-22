@@ -15,15 +15,27 @@ contextBridge.exposeInMainWorld('paletteAPI', {
       console.log(invoice)
       return await ipcRenderer.invoke('db:add-invoice', invoice)
     },
-    getInvoice: async (invoiceId) => {
+    getInvoice: async () => {
     // console.log('Llamando a db:getinvoice para la factura con id:', invoiceId)
-      return await ipcRenderer.invoke('db:getinvoice', invoiceId)
+      return await ipcRenderer.invoke('db:get-invoices')
     }
   },
   Operations: {
     calcTotal: async (product) => {
       console.log('Llamando a calc-total desde renderer', product)
       return await ipcRenderer.invoke('calc-total', product)
+    }
+  },
+
+  Calls: {
+    historyButton: async () => {
+      // console.log('Llamando a history-button desde renderer')
+      return await ipcRenderer.invoke('history-button')
+    },
+
+    detailButton: async (invoiceId) => {
+      // console.log('Llamando a get-invoiceDetail desde renderer con id de:', invoiceId)
+      return await ipcRenderer.invoke('get-invoiceDetail', invoiceId)
     }
   }
 })
