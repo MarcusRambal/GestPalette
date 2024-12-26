@@ -10,9 +10,8 @@
   <!-- Header -->
   <header class="header">
     <!-- Logo -->
-    <div class="logo">
-      <img src="../assets/frupalette_logo.jpg" alt="Frupalette" class="logo-image">
-      <h1 class="logo-text">Frupalette</h1>
+    <div class="historial">
+      <a href="./history.html" class="nav-link">Historial</a>
     </div>
 
     <!-- Navigation -->
@@ -20,33 +19,39 @@
       <a href="./index.html" class="nav-link">Inicio</a>
       <a href="./balance.html" class ="nav-link">Balance</a>
       <a href="./stats.html" class="nav-link">Estadisticas</a>
-      <a href="./history.html" class="nav-link">Historial</a>
+      
 
     </nav>
   </header>
 
-  <div class ="history"><p>Historial</p></div>
   <div id = "getFacturasContainer"><button class ="get-facturasButton"> 
     <p>Obtener Facturas</p>
   </button></div>
 
-  <div class="history-container">
+  <div id = "history-container">
     <!-- Sidebar izquierdo con la lista de facturas -->
-    <div class="invoices-sidebar">
+     <div id="history-left"> 
+        <div class="invoices-sidebar">
       <h2>Lista de Facturas</h2>
       <div class="invoices-list">
         <!-- Las facturas se cargarán aquí dinámicamente -->
       </div>
     </div>
+  </div> <!--history-left-->
+   
     
     <!-- Panel derecho con los detalles de la factura seleccionada -->
-    <div class="invoice-details-container">
-      <h2>Detalles de la Factura</h2>
-      <div class="invoice-details">
-        <p>Selecciona una factura para ver los detalles.</p>
+     <div id="history-right">
+      <div class="invoice-details-container">
+        <h2>Detalles de la Factura</h2>
+        <div class="invoice-details">
+          <p>Selecciona una factura para ver los detalles.</p>
+        </div>
       </div>
-    </div>
-  </div>
+     </div> <!--history-right-->
+    
+
+  </div> <!--history-container-->
   
   <script src="historysubpage.js"></script>
   
