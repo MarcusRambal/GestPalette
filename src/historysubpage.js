@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           const invoiceId = event.target.dataset.id
           console.log('Mostrar detalles de la factura con ID:', invoiceId)
           const invoiceDetails = await window.paletteAPI.Calls.detailButton(invoiceId)
+          console.log('Detalles de la factura:', invoiceDetails)
           showInvoiceDetails(invoiceDetails)
         })
       })
@@ -48,14 +49,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       const itemDiv = document.createElement('div')
       itemDiv.className = 'invoice-item'
       itemDiv.innerHTML = `
-         <p><strong>Factura con ID:</strong> ${item.invoice_id}</p>
-        <p><strong>Producto:</strong> ${item.product_name}</p>
+        <p class = "Factura-title"><strong>Factura con ID:</strong> ${item.invoice_id}</p>
+        <p class = "Product-title"><strong>Producto:</strong> ${item.product_name}</p>
+        <p class = "Product-type-title"><strong>Tipo:</strong> ${item.type}</p>
         <p><strong>Cantidad:</strong> ${item.quantity}</p>
         <p><strong>Precio:</strong> $${item.price.toFixed(2)}</p>
         <p><strong>Descuento:</strong> ${item.discount}%</p>
-        <p><strong>Total:</strong> $${item.total.toFixed(2)}</p>
+        <p class = "Total-title"><strong>Total:</strong> $${item.total.toFixed(2)}</p>
       `
       detailsContainer.appendChild(itemDiv)
     })
   }
 })
+
