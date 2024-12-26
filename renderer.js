@@ -243,6 +243,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const invoice = {
         productos: Object.values(selectedProducts).map(product => ({
           nombre: product.name,
+          tipo: product.type,
           cantidad: product.quantity,
           precio: product.price,
           descuento: product.discount,
@@ -328,4 +329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
+
 
