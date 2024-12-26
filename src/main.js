@@ -92,8 +92,8 @@ ipcMain.handle('db:add-invoice', (event, invoice) => {
 
       // Insertar los productos de la factura en la tabla InvoiceItems
       const stmt = db.prepare(`
-        INSERT INTO InvoiceItems (invoice_id, product_name, quantity, price, discount, total)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO InvoiceItems (invoice_id, product_name, quantity, price, discount, total, type)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
       `)
 
       productos.forEach(product => {
@@ -103,7 +103,8 @@ ipcMain.handle('db:add-invoice', (event, invoice) => {
           product.cantidad,
           product.precio,
           product.descuento,
-          product.total
+          product.total,
+          product.tipo
         )
       })
 
@@ -118,7 +119,7 @@ ipcMain.handle('db:add-invoice', (event, invoice) => {
 try {
   const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf-8')
   products = JSON.parse(data)
-  // console.log('Productos cargados desde config.json:', products)
+  //console.log('Productos cargados desde config.json:', products)
   // console.log(typeof (products))
 } catch (error) {
   console.error('Error al leer config.json:', error)
@@ -201,5 +202,6 @@ app.whenReady().then(() => {
     if (process.platform !== 'darwin') app.quit()
   })
 })
+
 
 
