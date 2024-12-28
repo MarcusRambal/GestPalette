@@ -24,6 +24,10 @@ contextBridge.exposeInMainWorld('paletteAPI', {
     calcTotal: async (product) => {
       console.log('Llamando a calc-total desde renderer', product)
       return await ipcRenderer.invoke('calc-total', product)
+    },
+    filterByDate: async (date) => {
+      console.log('Llamando a filter-by-date desde renderer', date)
+      return await ipcRenderer.invoke('filter-by-date', date)
     }
   },
 
@@ -39,3 +43,4 @@ contextBridge.exposeInMainWorld('paletteAPI', {
     }
   }
 })
+
