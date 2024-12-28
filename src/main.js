@@ -198,10 +198,38 @@ app.whenReady().then(() => {
     }
   })
 
+  ipcMain.handle('filter-by-date', async (event, date) => {
+    try {
+      if (!date) {
+        throw new Error('Debe proporcionar una fecha para filtrar.')
+      }
+  
+      return new Promise((resolve, reject) => {
+        db.all(
+          'SELECT * FROM Invoices WHERE DATE(created_at) = DATE(?) ORDER BY created_at DESC',
+          [date],
+          (err, rows) => {
+            if (err) {
+              console.error('Error al filtrar facturas por fecha:', err)
+              reject(err)
+              return
+            }
+            if (rows.length === 0) {
+              console.log('No se encontraron facturas para la fecha:', date)
+            }
+            resolve(rows); // Devuelve las facturas encontradas
+          }
+        )
+      })
+      
+    } catch (error) { console.error('Error al manejar el history-button:', error) }
+  })
+
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
   })
 })
+
 
 
 
