@@ -28,6 +28,10 @@ contextBridge.exposeInMainWorld('paletteAPI', {
     filterByDate: async (date) => {
       console.log('Llamando a filter-by-date desde renderer', date)
       return await ipcRenderer.invoke('filter-by-date', date)
+    },
+    filterByDay: async (day) => {
+      console.log('Llamando a filter-by-day desde renderer', day)
+      return await ipcRenderer.invoke('daily-balance', day)
     }
   },
 
