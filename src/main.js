@@ -221,8 +221,59 @@ app.whenReady().then(() => {
           }
         )
       })
+
+    
       
     } catch (error) { console.error('Error al manejar el history-button:', error) }
+  })
+
+  ipcMain.handle('daily-balance', async (event, date) => {
+    try {
+      if (!date) {
+        throw new Error('Debe proporcionar un día para filtrar.')
+      }
+  
+      return new Promise((resolve, reject) => {
+        db.all(
+          `
+          SELECT 
+            payment_type,
+            SUM(total) AS total_ganado,
+            SUM(total_efectivo) AS total_efectivo,
+            SUM(total_tarjeta) AS total_tarjeta
+          FROM Invoices
+          WHERE DATE(created_at) = DATE(?)
+          GROUP BY payment_type
+          ORDER BY payment_type ASC
+          `,
+          [date],
+          (err, rows) => {
+            if (err) {
+              console.error('Error al obtener el balance diario:', err)
+              reject(err)
+              return
+            }
+            if (rows.length === 0) {
+              console.log('No se encontraron ventas para la fecha:', date)
+              resolve([]) // Devolver un arreglo vacío si no hay ventas
+            } else {
+              const balance = {
+                total_general: rows.reduce((sum, row) => sum + row.total_ganado, 0),
+                desglose: rows.map(row => ({
+                  tipo_pago: row.payment_type,
+                  total: row.total_ganado,
+                  efectivo: row.total_efectivo,
+                  tarjeta: row.total_tarjeta
+                }))
+              }
+              resolve(balance) // Devolver el balance
+            }
+          }
+        )
+      })
+    } catch (error) {
+      console.error('Error al manejar el history-button:', error)
+    }
   })
 
   app.on('window-all-closed', () => {
