@@ -2,6 +2,7 @@ console.log('preload cargado correctamente')
 
 const { contextBridge, ipcRenderer } = require('electron')
 
+
 contextBridge.exposeInMainWorld('paletteAPI', {
   Products: {
     getProducts: async () => {
@@ -45,6 +46,14 @@ contextBridge.exposeInMainWorld('paletteAPI', {
       // console.log('Llamando a get-invoiceDetail desde renderer con id de:', invoiceId)
       return await ipcRenderer.invoke('get-invoiceDetail', invoiceId)
     }
+  },
+
+  Firebase: {
+    syncInvoices: async () => {
+      console.log('Llamando a syncFirebase desde renderer')
+      return await ipcRenderer.invoke('syncFirebase')
+    }
   }
 })
+
 
