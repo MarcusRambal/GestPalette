@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const amountPaidInput = document.getElementById('amount-paid')
   const changeReturn = document.getElementById('change-return')
   const calculateReturnButton = document.querySelector('.calculate-return-button')
-  const payButtom = document.querySelector('.pay-button')
+  const payButton = document.querySelector('.pay-button')
   const radioButton = document.querySelectorAll('input[name="payment"]')
-  const paymentMethods = document.querySelector('input[name="payment"]:checked')
+  // const paymentMethods = document.querySelector('input[name="payment"]:checked')
   const multipagoContainer = document.querySelector('.multipago-container')
   const multiefectivo = document.getElementById('amount-paid-efectivo')
   const multiother = document.getElementById('amount-paid-other')
@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const validationMessageValue = document.getElementById('validation-message-value')
   const validationMessageTotal = document.getElementById('validation-message-total')
   const confirmatioModal = document.getElementById('confirmation-modal')
+  const confirmationAlert = document.getElementById('confirmation-alert')
   const confirmButton = document.getElementById('confirm-payment')
   const cancelButton = document.getElementById('cancel-payment')
   const syncButton = document.getElementById('sync-button')
@@ -279,11 +280,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       confirmatioModal.style.display = 'none'
     })
 
-    payButtom.addEventListener('click', async () => {
+    payButton.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
       console.log(total)
       // cambiar el como se agarra el total ya que se puede modificar desde consola
-      const paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
+      const paymentMethods = document.querySelector('input[name="payment"]:checked')
+      let paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
 
       if (total === 0) {
         validationMessageTotal.style.display = 'block'
@@ -302,30 +304,36 @@ document.addEventListener('DOMContentLoaded', async () => {
         changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
         console.log('la cantidad paga es menor')
       }
+      console.log(paymentType)
 
-      const multiefectivoValue = multiefectivo.value.trim()
-      const multiotherValue = multiother.value.trim()
+      const multiefectivoValue = parseFloat(multiefectivo.value.trim()) 
+      console.log(multiefectivoValue)
+      const multiotherValue = parseFloat(multiother.value.trim()) 
+      console.log(multiotherValue)
 
-      if ((!multiefectivoValue || !multiotherValue) && (paymentType === 'multipago')) {
-        validationMessageInput.style.display = 'block'
-        console.log('Campos de pago incompletos')
-        return
-      } else {
-        validationMessageInput.style.display = 'none'
-      }
-
-      const amountPaidEfectivo = parseFloat(multiefectivo.value)
-      console.log(amountPaidEfectivo)
-      const amountPaidOther = parseFloat(multiother.value)
-      console.log(amountPaidOther)
-
-      if (amountPaidEfectivo + amountPaidOther < total) {
-        validationMessageValue.style.display = 'block'
-        return
-      } else {
+      // Verificar si los valores son números válidos y si los campos están vacíos
+      if ((isNaN(multiefectivoValue) || isNaN(multiotherValue)) && paymentType === 'multipago') {
+      console.log('Entre al if y paymentType si')
+      validationMessageInput.style.display = 'block'
+      console.log('Campos de pago incompletos')
+      setTimeout(() => {
+      validationMessageInput.style.display = 'none'
+      }, 5000)
+      return
+    } else {
+      validationMessageInput.style.display = 'none'
+    }   
+      
+    if (multiefectivoValue + multiotherValue < total) {
+      validationMessageValue.style.display = 'block'
+      setTimeout(() => {
         validationMessageValue.style.display = 'none'
-      }
-
+      }, 5000)
+      return
+    } else {
+      validationMessageValue.style.display = 'none'
+    }
+  
       confirmatioModal.style.display = 'block'
     })
 
@@ -343,6 +351,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
 
 
 
