@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const validationMessageInput = document.getElementById('validation-message-input')
   const validationMessageValue = document.getElementById('validation-message-value')
   const validationMessageTotal = document.getElementById('validation-message-total')
-  const confirmatioModal = document.getElementById('confirmation-modal')
-  const confirmationAlert = document.getElementById('confirmation-alert')
+  const confirmationModal = document.getElementById('confirmation-modal')
+  const confirmationAlert = document.getElementById('confirmation-alert-modal')
   const confirmButton = document.getElementById('confirm-payment')
   const cancelButton = document.getElementById('cancel-payment')
   const syncButton = document.getElementById('sync-button')
@@ -265,6 +265,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       } catch (error) {
         console.log('Error al procesar el pago', error)
       }
+
+      confirmationAlert.style.display = 'block'
+     
       // reiniciar interfaz y objetos
       selectedProductsTableBody.innerHTML = ''
       amountPaidInput.value = ''
@@ -273,11 +276,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       changeReturn.textContent = 'Vuelto: $0.00'
       document.querySelector('#total-display').textContent = 'Total: $0.00'
       Object.keys(selectedProducts).forEach(key => delete selectedProducts[key])
-      confirmatioModal.style.display = 'none'
+      confirmationModal.style.display = 'none'
+      
     })
 
     cancelButton.addEventListener('click', () => {
-      confirmatioModal.style.display = 'none'
+      confirmationModal.style.display = 'none'
     })
 
     payButton.addEventListener('click', async () => {
@@ -334,7 +338,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       validationMessageValue.style.display = 'none'
     }
   
-      confirmatioModal.style.display = 'block'
+      confirmationModal.style.display = 'block'
     })
 
     syncButton.addEventListener('click', async () => {
@@ -351,7 +355,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
-
 
 
 
