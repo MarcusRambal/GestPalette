@@ -3,7 +3,27 @@ const path = require('path')
 const fs = require('fs')
 const sqlite3 = require('sqlite3').verbose()
 let products = []
-// Configuración de la base de datos
+
+const { initializeApp } = require("firebase/app")
+const { getDatabase, ref, set } = require("firebase/database") 
+
+
+// Configuración de Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyAacGcmg8rAn020LjUhWVORXhgqJ4nNiAs",
+  authDomain: "gestpalette.firebaseapp.com",
+  projectId: "gestpalette",
+  storageBucket: "gestpalette.firebasestorage.app",
+  messagingSenderId: "798947796808",
+  appId: "1:798947796808:web:a71b4477dd2bf824e0b57d",
+  measurementId: "G-EJT62T86PJ"
+}
+
+const firebaseApp = initializeApp(firebaseConfig);
+const Firedb = getDatabase(firebaseApp);
+
+
+// Configuración de la base de datos sqlite
 const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
   if (err) {
     console.log('Error al conectar con la base de datos:', err)
@@ -19,7 +39,8 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
           total REAL NOT NULL,                        -- Total de la factura
           total_efectivo REAL NULL,
           total_tarjeta REAL NULL,
-          created_at TEXT DEFAULT (datetime('now', 'localtime')) -- Fecha y hora de creación
+          created_at TEXT DEFAULT (datetime('now', 'localtime')), -- Fecha y hora de creación
+          synced INTEGER DEFAULT 0                    -- Indica si la factura ha sido sincronizada con Firebase
         )
       `, (err) => {
         if (err) {
@@ -39,6 +60,7 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
           price REAL NOT NULL,                        -- Precio unitario del producto
           discount REAL NOT NULL DEFAULT 0,           -- Descuento aplicado al producto
           total REAL NOT NULL,                        -- Total para este producto (cantidad * precio * descuento)
+          type TEXT NOT NULL,                         -- Tipo de producto 
           FOREIGN KEY (invoice_id) REFERENCES Invoices (id) -- Relación con la tabla Invoices
         )
       `, (err) => {
@@ -51,6 +73,48 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
     })
   }
 })
+
+
+ipcMain.handle('syncFirebase', async () => {
+  try {
+    // Recuperar datos no sincronizados desde SQLite
+    const rows = await new Promise((resolve, reject) => {
+      db.all("SELECT * FROM Invoices WHERE synced = 0", [], (err, rows) => {
+        if (err) reject(err);
+        resolve(rows);
+      });
+    });
+
+    // Sincronizar con Firebase
+    for (const invoice of rows) {
+      try {
+        const invoiceRef = ref(Firedb, `invoices/${invoice.id}`);
+        await set(invoiceRef, {
+          paymentType: invoice.payment_type,
+          total: invoice.total,
+          total_efectivo: invoice.total_efectivo,
+          total_tarjeta: invoice.total_tarjeta,
+          created_at: invoice.created_at,
+        });
+
+        // Actualizar SQLite para marcar como sincronizado
+        await new Promise((resolve, reject) => {
+          db.run("UPDATE invoices SET synced = 1 WHERE id = ?", [invoice.id], (err) => {
+            if (err) reject(err);
+            resolve();
+          });
+        });
+
+        console.log(`Invoice ${invoice.id} sincronizado correctamente.`);
+      } catch (error) {
+        console.error(`Error al sincronizar la factura ${invoice.id}:`, error);
+      }
+    }
+  } catch (err) {
+    console.error("Error al recuperar las facturas desde SQLite:", err);
+  }
+});
+
 
 // funciones que trabajen con la base de datos
 // Función para agregar una factura y sus productos
