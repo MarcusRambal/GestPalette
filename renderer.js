@@ -1,5 +1,6 @@
 console.log('renderer.js cargado correctamente')
 
+
 document.addEventListener('DOMContentLoaded', async () => {
   const productsContainer = document.querySelector('.products-list')
   const selectedProductsTableBody = document.querySelector('.selected-products-table tbody')
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const confirmatioModal = document.getElementById('confirmation-modal')
   const confirmButton = document.getElementById('confirm-payment')
   const cancelButton = document.getElementById('cancel-payment')
+  const syncButton = document.getElementById('sync-button')
   const selectedProducts = {}
 
   try {
@@ -201,6 +203,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return acc + (product.quantity * product.price * ((100 - product.discount) / 100))
       }, 0)
     }
+
     radioButton.forEach((rbutton) => {
       rbutton.addEventListener('change', (event) => {
         const selectedPayment = event.target.value
@@ -325,6 +328,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       confirmatioModal.style.display = 'block'
     })
+
+    syncButton.addEventListener('click', async () => {
+      try {
+        await window.paletteAPI.Firebase.syncInvoices()
+        console.log('Sincronización con Firebase exitosa')
+      } catch (error) {
+        console.error('Error al sincronizar con Firebase:', error)
+      }
+    })
+
+
   } catch (error) {
     console.error('Error al cargar productos:', error)
   }
