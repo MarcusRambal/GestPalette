@@ -10,7 +10,7 @@ const { getDatabase, ref, set } = require("firebase/database")
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyAacGcmg8rAn020LjUhWVORXhgqJ4nNiAs",
+  apiKey: "",
   authDomain: "gestpalette.firebaseapp.com",
   projectId: "gestpalette",
   storageBucket: "gestpalette.firebasestorage.app",
