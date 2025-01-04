@@ -350,8 +350,9 @@ tr.added {
   display: none;
 }
 
-.modal-hidden {
-  display: none; 
+/* General para el modal */
+#confirmation-modal {
+  display: none; /* Oculto inicialmente */
   position: fixed;
   top: 0;
   left: 0;
@@ -361,8 +362,8 @@ tr.added {
   z-index: 999; 
 }
 
-/* Estilo del contenido del modal */
-.modal-hidden .modal-content {
+/* Contenido del modal */
+#confirmation-modal .modal-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -376,15 +377,9 @@ tr.added {
   padding: 20px;
 }
 
-.modal-hidden .modal-content p {
-  font-size: 18px;
-  margin: 20px 0;
-  color: #333;
-}
-
-/* Estilo de botones dentro del modal */
-.modal-hidden .confirm-button,
-.modal-hidden .cancel-button {
+/* Estilos de botones */
+#confirmation-modal .confirm-button,
+#confirmation-modal .cancel-button {
   padding: 10px 20px;
   margin: 10px;
   font-size: 16px;
@@ -393,24 +388,72 @@ tr.added {
   cursor: pointer;
 }
 
-.modal-hidden .confirm-button {
+#confirmation-modal .confirm-button {
   background: #4caf50;
   color: #fff;
   transition: background-color 0.3s;
 }
 
-.modal-hidden .confirm-button:hover {
+#confirmation-modal .confirm-button:hover {
   background: #45a049;
 }
 
-.modal-hidden .cancel-button {
+#confirmation-modal .cancel-button {
   background: #f44336;
   color: #fff;
   transition: background-color 0.3s;
 }
 
-.modal-hidden .cancel-button:hover {
+#confirmation-modal .cancel-button:hover {
   background: #e41f1f;
+}
+
+
+/* General para la alerta de exito */
+#success-modal {
+  display: none; /* Oculto inicialmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
+}
+
+/* Contenido del modal */
+#success-modal .modal-success-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+}
+
+/* Estilos de botones */
+#success-modal .close-button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#success-modal .close-button {
+  background: #4caf50;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+#success-modal .close-button:hover {
+  background: #45a049;
 }
 
 .validation-message-input {
