@@ -1,6 +1,5 @@
 console.log('renderer.js cargado correctamente')
 
-
 document.addEventListener('DOMContentLoaded', async () => {
   const productsContainer = document.querySelector('.products-list')
   const selectedProductsTableBody = document.querySelector('.selected-products-table tbody')
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const validationMessageValue = document.getElementById('validation-message-value')
   const validationMessageTotal = document.getElementById('validation-message-total')
   const confirmationModal = document.getElementById('confirmation-modal')
-  const confirmationAlert = document.getElementById('confirmation-alert-modal')
   const confirmButton = document.getElementById('confirm-payment')
   const cancelButton = document.getElementById('cancel-payment')
   const syncButton = document.getElementById('sync-button')
@@ -205,6 +203,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 0)
     }
 
+    function showSuccess () {
+      const successModal = document.getElementById('success-modal')
+      const closeButton = document.getElementById('close-success-modal')
+      successModal.style.display = 'block'
+
+      closeButton.addEventListener('click', () => {
+        successModal.style.display = 'none'
+      })
+      setTimeout(() => {
+        successModal.style.display = 'none'
+      }, 5000)
+    }
+
     radioButton.forEach((rbutton) => {
       rbutton.addEventListener('change', (event) => {
         const selectedPayment = event.target.value
@@ -261,23 +272,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log(invoice.multipagos)
       try {
         await saveInvoice(invoice)
-        console.log('saveInvoice genero la factura correctamente ', invoice)
-      } catch (error) {
-        console.log('Error al procesar el pago', error)
-      }
+        console.log('Factura guardada correctamente:', invoice)
 
-      confirmationAlert.style.display = 'block'
-     
-      // reiniciar interfaz y objetos
-      selectedProductsTableBody.innerHTML = ''
-      amountPaidInput.value = ''
-      multiefectivo.value = ''
-      multiother.value = ''
-      changeReturn.textContent = 'Vuelto: $0.00'
-      document.querySelector('#total-display').textContent = 'Total: $0.00'
-      Object.keys(selectedProducts).forEach(key => delete selectedProducts[key])
-      confirmationModal.style.display = 'none'
-      
+        confirmationModal.style.display = 'none'
+
+        showSuccess()
+        // Reiniciar interfaz y objetos
+        selectedProductsTableBody.innerHTML = ''
+        amountPaidInput.value = ''
+        multiefectivo.value = ''
+        multiother.value = ''
+        changeReturn.textContent = 'Vuelto: $0.00'
+        document.querySelector('#total-display').textContent = 'Total: $0.00'
+        Object.keys(selectedProducts).forEach(key => delete selectedProducts[key])
+      } catch (error) {
+        console.error('Error al procesar el pago:', error)
+      }
     })
 
     cancelButton.addEventListener('click', () => {
@@ -289,7 +299,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log(total)
       // cambiar el como se agarra el total ya que se puede modificar desde consola
       const paymentMethods = document.querySelector('input[name="payment"]:checked')
-      let paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
+      const paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
 
       if (total === 0) {
         validationMessageTotal.style.display = 'block'
@@ -310,34 +320,34 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       console.log(paymentType)
 
-      const multiefectivoValue = parseFloat(multiefectivo.value.trim()) 
+      const multiefectivoValue = parseFloat(multiefectivo.value.trim())
       console.log(multiefectivoValue)
-      const multiotherValue = parseFloat(multiother.value.trim()) 
+      const multiotherValue = parseFloat(multiother.value.trim())
       console.log(multiotherValue)
 
       // Verificar si los valores son números válidos y si los campos están vacíos
       if ((isNaN(multiefectivoValue) || isNaN(multiotherValue)) && paymentType === 'multipago') {
-      console.log('Entre al if y paymentType si')
-      validationMessageInput.style.display = 'block'
-      console.log('Campos de pago incompletos')
-      setTimeout(() => {
-      validationMessageInput.style.display = 'none'
-      }, 5000)
-      return
-    } else {
-      validationMessageInput.style.display = 'none'
-    }   
-      
-    if (multiefectivoValue + multiotherValue < total) {
-      validationMessageValue.style.display = 'block'
-      setTimeout(() => {
+        console.log('Entre al if y paymentType si')
+        validationMessageInput.style.display = 'block'
+        console.log('Campos de pago incompletos')
+        setTimeout(() => {
+          validationMessageInput.style.display = 'none'
+        }, 5000)
+        return
+      } else {
+        validationMessageInput.style.display = 'none'
+      }
+
+      if (multiefectivoValue + multiotherValue < total) {
+        validationMessageValue.style.display = 'block'
+        setTimeout(() => {
+          validationMessageValue.style.display = 'none'
+        }, 5000)
+        return
+      } else {
         validationMessageValue.style.display = 'none'
-      }, 5000)
-      return
-    } else {
-      validationMessageValue.style.display = 'none'
-    }
-  
+      }
+
       confirmationModal.style.display = 'block'
     })
 
@@ -349,12 +359,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Error al sincronizar con Firebase:', error)
       }
     })
-
-
   } catch (error) {
     console.error('Error al cargar productos:', error)
   }
 })
-
 
 
