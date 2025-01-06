@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         productBlock.classList.add('product-item')
 
         productBlock.innerHTML = `
-          <img src="${product.image}" alt="${product.name}" class="product-image" />
           <h3>${product.name}</h3>
           <p class="price">$${product.price}</p>
           <button class="add-to-cart" data-product-id="${product.name}">+</button>
@@ -367,4 +366,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
+
 
