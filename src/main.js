@@ -4,24 +4,16 @@ const fs = require('fs')
 const sqlite3 = require('sqlite3').verbose()
 let products = []
 
-const { initializeApp } = require("firebase/app")
-const { getDatabase, ref, set } = require("firebase/database") 
-
+const { initializeApp } = require('firebase/app')
+const { getDatabase, ref, set } = require('firebase/database')
 
 // Configuración de Firebase
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "gestpalette.firebaseapp.com",
-  projectId: "gestpalette",
-  storageBucket: "gestpalette.firebasestorage.app",
-  messagingSenderId: "798947796808",
-  appId: "1:798947796808:web:a71b4477dd2bf824e0b57d",
-  measurementId: "G-EJT62T86PJ"
+  // ---------------------- IMPORTANTE ----------------------
 }
 
-const firebaseApp = initializeApp(firebaseConfig);
-const Firedb = getDatabase(firebaseApp);
-
+const firebaseApp = initializeApp(firebaseConfig)
+const Firedb = getDatabase(firebaseApp)
 
 // Configuración de la base de datos sqlite
 const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
@@ -74,72 +66,73 @@ const db = new sqlite3.Database(path.join(__dirname, 'Invoices.db'), (err) => {
   }
 })
 
-
+// Sincronizar facturas con Firebase
 ipcMain.handle('syncFirebase', async () => {
   try {
-    // Recuperar datos no sincronizados desde SQLite
-    const rows = await new Promise((resolve, reject) => {
-      db.all("SELECT * FROM Invoices WHERE synced = 0", [], (err, rows) => {
-        if (err) reject(err);
-        resolve(rows);
-      });
-    });
+    // Recuperar facturas no sincronizadas
+    const invoices = await new Promise((resolve, reject) => {
+      db.all('SELECT * FROM Invoices WHERE synced = 0', [], (err, rows) => {
+        if (err) reject(err)
+        resolve(rows)
+      })
+    })
 
-    // Sincronizar con Firebase
-    for (const invoice of rows) {
+    for (const invoice of invoices) {
       try {
-        const invoiceRef = ref(Firedb, `invoices/${invoice.id}`);
+        const invoiceRef = ref(Firedb, `invoices/${invoice.id}`)
+        // Sincronizar la factura
         await set(invoiceRef, {
           paymentType: invoice.payment_type,
           total: invoice.total,
           total_efectivo: invoice.total_efectivo,
           total_tarjeta: invoice.total_tarjeta,
-          created_at: invoice.created_at,
-        });
+          created_at: invoice.created_at
+        })
 
-        // Actualizar SQLite para marcar como sincronizado
+        // Recuperar productos relacionados con la factura
+        const invoiceItems = await new Promise((resolve, reject) => {
+          db.all('SELECT * FROM InvoiceItems WHERE invoice_id = ?', [invoice.id], (err, rows) => {
+            if (err) reject(err)
+            resolve(rows)
+          })
+        })
+
+        // Sincronizar cada producto de la factura
+        for (const item of invoiceItems) {
+          const itemRef = ref(Firedb, `invoices/${invoice.id}/items/${item.id}`)
+          await set(itemRef, {
+            productName: item.product_name,
+            quantity: item.quantity,
+            price: item.price,
+            discount: item.discount,
+            total: item.total,
+            type: item.type
+          })
+        }
+
+        // Marcar la factura como sincronizada en SQLite db
         await new Promise((resolve, reject) => {
-          db.run("UPDATE invoices SET synced = 1 WHERE id = ?", [invoice.id], (err) => {
-            if (err) reject(err);
-            resolve();
-          });
-        });
+          db.run('UPDATE Invoices SET synced = 1 WHERE id = ?', [invoice.id], (err) => {
+            if (err) reject(err)
+            resolve()
+          })
+        })
 
-        console.log(`Invoice ${invoice.id} sincronizado correctamente.`);
+        console.log(`Invoice ${invoice.id} y sus items sincronizados correctamente.`)
       } catch (error) {
-        console.error(`Error al sincronizar la factura ${invoice.id}:`, error);
+        console.error(`Error al sincronizar la factura ${invoice.id}:`, error)
       }
     }
   } catch (err) {
-    console.error("Error al recuperar las facturas desde SQLite:", err);
+    console.error('Error al recuperar las facturas desde SQLite:', err)
   }
-});
+})
 
-
-// funciones que trabajen con la base de datos
 // Función para agregar una factura y sus productos
 ipcMain.handle('db:add-invoice', (event, invoice) => {
   // Insertar la factura en la tabla Invoices
-  console.log('PASADO DESDE LA API: ', invoice)
   const { productos, total, tipoPago, multipagos } = invoice
-  // console.log('products: ', productos, 'total: ', total, 'tipo de pago: ', tipoPago, 'Multipago:', multipagos)
   const [efectivo, tarjeta] = multipagos
-  console.log(efectivo, tarjeta)
-
-  /* productos.forEach(product => {
-    const productInConfig = products[product.nombre]
-    console.log(productInConfig)
-    if (!productInConfig) {
-      throw new Error(`Producto ${product.nombre} no encontrado en el archivo config.json`)
-    }
-    if (product.precio !== productInConfig.price) {
-      throw new Error(`El precio de ${product.nombre} ha sido manipulado`)
-    }
-    // Validar cantidad y descuento
-    if (product.cantidad <= 0 || product.descuento < 0 || product.descuento > 100) {
-      throw new Error(`Cantidad o descuento inválido para ${product.nombre}`)
-    }
-  }) */
 
   db.serialize(() => {
     // Insertar la factura
@@ -183,8 +176,6 @@ ipcMain.handle('db:add-invoice', (event, invoice) => {
 try {
   const data = fs.readFileSync(path.join(__dirname, '../config.json'), 'utf-8')
   products = JSON.parse(data)
-  //console.log('Productos cargados desde config.json:', products)
-  // console.log(typeof (products))
 } catch (error) {
   console.error('Error al leer config.json:', error)
 }
@@ -210,7 +201,6 @@ app.whenReady().then(() => {
 
   // Enviar productos al renderer
   ipcMain.handle('get-products', () => products)
-  // console.log('Productos enviados al renderer: ', products)
   ipcMain.handle('calc-total', (event, product) => {
     const { quantity, price, discount } = product
 
@@ -218,13 +208,11 @@ app.whenReady().then(() => {
       throw new Error('Los valores enviados son inválidos')
     }
     const total = quantity * price * ((100 - discount) / 100)
-    // console.log('total enviado desde el main:', quantity, price, discount)
     return total
   })
 
   ipcMain.handle('history-button', async () => {
     try {
-      // console.log('Botón de historial presionado')
       return new Promise((resolve, reject) => {
         db.all('SELECT * FROM Invoices  ORDER BY created_at DESC', [], (err, rows) => {
           if (err) {
@@ -240,9 +228,8 @@ app.whenReady().then(() => {
       throw error
     }
   })
-
+  // Obtener los productos de una factura
   ipcMain.handle('get-invoiceDetail', async (event, invoiceId) => {
-    console.log('ID de la factura:', invoiceId)
     try {
       return new Promise((resolve, reject) => {
         // Obtener los productos asociados a la factura por su ID
@@ -252,7 +239,6 @@ app.whenReady().then(() => {
             reject(err)
             return
           }
-          console.log('Productos de la factura:', rows)
           resolve(rows) // Enviar los productos de la factura
         })
       })
@@ -261,13 +247,13 @@ app.whenReady().then(() => {
       throw error
     }
   })
-
+  // Filtrar facturas por fecha
   ipcMain.handle('filter-by-date', async (event, date) => {
     try {
       if (!date) {
         throw new Error('Debe proporcionar una fecha para filtrar.')
       }
-  
+
       return new Promise((resolve, reject) => {
         db.all(
           'SELECT * FROM Invoices WHERE DATE(created_at) = DATE(?) ORDER BY created_at DESC',
@@ -281,22 +267,19 @@ app.whenReady().then(() => {
             if (rows.length === 0) {
               console.log('No se encontraron facturas para la fecha:', date)
             }
-            resolve(rows); // Devuelve las facturas encontradas
+            resolve(rows)
           }
         )
       })
-
-    
-      
     } catch (error) { console.error('Error al manejar el history-button:', error) }
   })
-
+  // Obtener el balance diario o de una fecha especifica
   ipcMain.handle('daily-balance', async (event, date) => {
     try {
       if (!date) {
         throw new Error('Debe proporcionar un día para filtrar.')
       }
-  
+
       return new Promise((resolve, reject) => {
         db.all(
           `
@@ -330,7 +313,7 @@ app.whenReady().then(() => {
                   tarjeta: row.total_tarjeta
                 }))
               }
-              resolve(balance) // Devolver el balance
+              resolve(balance)
             }
           }
         )
@@ -344,6 +327,7 @@ app.whenReady().then(() => {
     if (process.platform !== 'darwin') app.quit()
   })
 })
+
 
 
 
