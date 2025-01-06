@@ -2,12 +2,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const historyButton = document.querySelector('.get-facturasButton')
   const calendarButton = document.querySelector('.calendarButton')
   const dateInput = document.querySelector('#start')
-
   const invoicesList = document.querySelector('.invoices-list')
 
   // Función para renderizar facturas en un contenedor
-  function renderInvoices(invoices, container) {
-    container.innerHTML = '' // Limpiar el contenedor
+  function renderInvoices (invoices, container) {
+    container.innerHTML = ''
 
     if (!invoices || invoices.length === 0) {
       container.innerHTML = '<p>No se encontraron facturas.</p>'
@@ -42,9 +41,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Función para mostrar los detalles de la factura
-  function showInvoiceDetails(details) {
-    const detailsContainer = document.querySelector('.invoice-details-container') // Crear o seleccionar un contenedor para mostrar los detalles
-    detailsContainer.innerHTML = '' // Limpiar el contenedor
+  function showInvoiceDetails (details) {
+    const detailsContainer = document.querySelector('.invoice-details-container')
+    detailsContainer.innerHTML = ''
 
     if (!details || details.length === 0) {
       detailsContainer.innerHTML = '<p>No hay detalles para mostrar.</p>'
@@ -94,4 +93,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   })
 })
+
 
