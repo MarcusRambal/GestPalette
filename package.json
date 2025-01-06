@@ -1,7 +1,6 @@
 {
-  "name": "my-electron-app",
+  "name": "gestpalette",
   "version": "1.0.0",
-  "description": "",
   "main": "./src/main.js",
   "scripts": {
     "dev": "electron .",
@@ -10,14 +9,16 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "devDependencies": {
-    "electron": "^33.2.0",
+    "electron": "^33.2.1",
     "standard": "^17.1.2"
   },
   "eslintConfig": {
     "extends": "standard"
   },
   "dependencies": {
+    "firebase": "^11.1.0",
     "sqlite3": "^5.1.7"
   }
 }
