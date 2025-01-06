@@ -197,17 +197,12 @@
   background-color: #4c2f8b;
 }
 
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 768px) {
-  #history-container {
-    flex-wrap: wrap;
-  }
-
-  #history-left,
-  #history-right {
-    flex: 1;
-    width: 100%;
-    max-height: 400px;
-  }
+.calendarButton{
+  padding: 10px 20px;
+  background-color: #5c3d9e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-
