@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const calculateReturnButton = document.querySelector('.calculate-return-button')
   const payButton = document.querySelector('.pay-button')
   const radioButton = document.querySelectorAll('input[name="payment"]')
-  // const paymentMethods = document.querySelector('input[name="payment"]:checked')
   const multipagoContainer = document.querySelector('.multipago-container')
   const multiefectivo = document.getElementById('amount-paid-efectivo')
   const multiother = document.getElementById('amount-paid-other')
@@ -110,12 +109,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       // Agregar todo el fragmento al DOM de una sola vez
       selectedProductsTableBody.appendChild(fragment)
-
-      // Mostrar el contenedor nuevamente
-      /*  setTimeout(() => {
-        selectedProductsContainer.classList.remove('hidden')
-      }, 300)
-      */
       // Actualizar el total
       updateTotal()
     }
@@ -191,7 +184,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function saveInvoice (invoice) {
       try {
         await window.paletteAPI.Invoice.addInvoice(invoice)
-        console.log('Entre a (saveInvoice)', invoice)
       } catch (error) {
         console.error('Error al guardar la factura:', error)
       }
@@ -216,6 +208,32 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 5000)
     }
 
+    function showSyncSuccess () {
+      const successSync = document.getElementById('success-sync')
+      const closeSync = document.getElementById('close-success-sync')
+      successSync.style.display = 'block'
+
+      closeSync.addEventListener('click', () => {
+        successSync.style.display = 'none'
+      })
+      setTimeout(() => {
+        successSync.style.display = 'none'
+      }, 5000)
+    }
+
+    function showSyncError () {
+      const errorSync = document.getElementById('error-sync')
+      const closeErrorSync = document.getElementById('close-error-sync')
+      errorSync.style.display = 'block'
+
+      closeErrorSync.addEventListener('click', () => {
+        errorSync.style.display = 'none'
+      })
+      setTimeout(() => {
+        errorSync.style.display = 'none'
+      }, 5000)
+    }
+
     radioButton.forEach((rbutton) => {
       rbutton.addEventListener('change', (event) => {
         const selectedPayment = event.target.value
@@ -227,14 +245,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       })
     })
 
-    /* multiefectivo.addEventListener('input', (event) => {
-      console.log('Valor en efectivo: ', event.target.value)
-    }) */
-
-    /* multiother.addEventListener('input', (event) => {
-      console.log('Valor en other:', event.target.value)
-    }) */
-
     confirmButton.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
       console.log(total)
@@ -243,12 +253,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       let paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
 
       const amountPaidEfectivo = parseFloat(multiefectivo.value)
-      console.log(amountPaidEfectivo)
       const amountPaidOther = parseFloat(multiother.value)
-      console.log(amountPaidOther)
 
       const pagos = [amountPaidEfectivo, amountPaidOther]
-      // console.log(pagos)
 
       if (!['efectivo', 'tarjeta', 'transferencia', 'multipago'].includes(paymentType)) {
         paymentType = 'efectivo' // Valor por defecto
@@ -268,11 +275,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         tipoPago: paymentType,
         multipagos: paymentType === 'multipago' ? pagos : []
       }
-      console.log(invoice.tipoPago)
-      console.log(invoice.multipagos)
+
       try {
         await saveInvoice(invoice)
-        console.log('Factura guardada correctamente:', invoice)
 
         confirmationModal.style.display = 'none'
 
@@ -296,7 +301,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     payButton.addEventListener('click', async () => {
       const total = calculateTotalFromProducts(selectedProducts)
-      console.log(total)
       // cambiar el como se agarra el total ya que se puede modificar desde consola
       const paymentMethods = document.querySelector('input[name="payment"]:checked')
       const paymentType = paymentMethods ? paymentMethods.value : 'efectivo'
@@ -316,20 +320,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (amountPaid < total) {
         changeReturn.textContent = 'La cantidad dada por el cliente es menor que el total a pagar.'
-        console.log('la cantidad paga es menor')
       }
-      console.log(paymentType)
 
       const multiefectivoValue = parseFloat(multiefectivo.value.trim())
-      console.log(multiefectivoValue)
       const multiotherValue = parseFloat(multiother.value.trim())
-      console.log(multiotherValue)
 
       // Verificar si los valores son números válidos y si los campos están vacíos
       if ((isNaN(multiefectivoValue) || isNaN(multiotherValue)) && paymentType === 'multipago') {
-        console.log('Entre al if y paymentType si')
         validationMessageInput.style.display = 'block'
-        console.log('Campos de pago incompletos')
         setTimeout(() => {
           validationMessageInput.style.display = 'none'
         }, 5000)
@@ -352,8 +350,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
 
     syncButton.addEventListener('click', async () => {
+      if (!navigator.onLine) {
+        showSyncError()
+        console.error('Error al sincronizar con Firebase: No hay conexión a Internet.')
+        return
+      }
       try {
         await window.paletteAPI.Firebase.syncInvoices()
+        showSyncSuccess()
         console.log('Sincronización con Firebase exitosa')
       } catch (error) {
         console.error('Error al sincronizar con Firebase:', error)
@@ -363,5 +367,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error('Error al cargar productos:', error)
   }
 })
-
 
