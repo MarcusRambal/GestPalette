@@ -456,6 +456,101 @@ tr.added {
   background: #45a049;
 }
 
+/* General para la alerta de exito al sincronizar con firebase*/
+#success-sync {
+  display: none; /* Oculto inicialmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
+}
+
+/* Contenido del modal */
+#success-sync .sync-success-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+}
+
+/* Estilos de botones */
+#success-sync .close-sync {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#success-sync .close-sync {
+  background: #0cebd8;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+#success-sync .close-sync:hover {
+  background: #35adb6;
+}
+
+/* General para la alerta de error */
+
+#error-sync {
+  display: none; /* Oculto inicialmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
+}
+
+/* Contenido del modal */
+#error-sync .sync-error-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+}
+
+/* Estilos de botones */
+#error-sync .close-error-sync {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#error-sync .close-error-sync {
+  background: #e61515;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+#error-sync .close-error-sync:hover {
+  background: #df436a;
+}
+
 .validation-message-input {
   display: none;
   color: red;
@@ -476,7 +571,6 @@ tr.added {
 
 /* --------------------------------------------------------------------*/
 
-/* Contenedor de navegación */
 /* Contenedor de navegación */
 .navigation {
   display: grid;
@@ -521,3 +615,4 @@ tr.added {
   text-decoration: none;
   color: inherit; 
 }
+
