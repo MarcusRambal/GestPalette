@@ -36,8 +36,8 @@
   }
 
 
-  /* Contenedor principal */
-.Base-container, #filter-container, .balance-container {
+  /* Contenedor principal */ 
+  #filter-container {
   background-color: white;
   border-radius: 8px;
   padding: 20px;
@@ -45,40 +45,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-  color: #2f8b56; /* Verde resaltado para el título */
-}
-
-/* Estilo para el input y botón de la base */
-.Base-container label {
-  font-weight: bold;
-  color: #2f8b56; /* Verde */
-}
-
-.Base-container input, .Base-container button {
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 10px;
-  width: 100%;
-  max-width: 300px;
-  border: 1px solid #ddd;
-}
-
-.Base-container input {
-  font-size: 16px;
-}
-
-.Base-container button {
-  background-color: #2f8b56;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.Base-container button:hover {
-  background-color: #267a4c;
-}
 
 /* Estilo para el contenedor de filtro */
 #filter-container label {
