@@ -811,55 +811,6 @@
       "cost": 0,
       "type": "Bebidas",
       "id": 116
-    },
-    {
-      "name": "manzana",
-      "price": 8000,
-      "cost": 0,
-      "type": "Agua",
-      "id": 117
-    },
-    {
-      "name": "hare",
-      "price": 10000,
-      "cost": 0,
-      "type": "Frappe",
-      "id": 118
-    },
-    {
-      "name": "ARONA",
-      "price": 1311413,
-      "cost": 0,
-      "type": "Licor",
-      "id": 119
-    },
-    {
-      "name": "dddddddd",
-      "price": 1414141,
-      "cost": 0,
-      "type": "Rellenas",
-      "id": 119
-    },
-    {
-      "name": "fabian es marica",
-      "price": 69,
-      "cost": 0,
-      "type": "Rellenas",
-      "id": 120
-    },
-    {
-      "name": "fabian es burra",
-      "price": 311341,
-      "cost": 0,
-      "type": "Frappe",
-      "id": 121
-    },
-    {
-      "name": "fabian es polilla",
-      "price": 241414,
-      "cost": 0,
-      "type": "Rellenas",
-      "id": 122
     }
   ]
 }
